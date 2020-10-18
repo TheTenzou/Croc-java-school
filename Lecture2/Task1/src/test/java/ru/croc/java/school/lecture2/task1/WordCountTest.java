@@ -12,6 +12,7 @@ public class  WordCountTest {
 
     @Test
     public void wordCountTest() {
+
         Map<String, Integer> words = wordsCount("");
         Assertions.assertEquals(new HashMap<String, Integer>(), words);
 

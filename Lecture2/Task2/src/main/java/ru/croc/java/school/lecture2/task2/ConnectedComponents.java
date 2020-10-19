@@ -7,15 +7,24 @@ import java.util.*;
  */
 public class ConnectedComponents {
     /**
-     * Список вершин первый параметр вершина второй былали вершина использована
-     * True - вершину еще не посешали
-     * False - вершину уэе посешали
+     * Список вершин первый параметр вершина второй номер компоненты связаности
+     * если компоненту еще не обошли то он равен 0
      */
-    private HashMap<Node, Boolean> nodes = new HashMap<>();
+    private HashMap<Node, Integer> nodes = new HashMap<>();
     /**
      * компонента звязаности
      */
-    private Set<Node> components = new HashSet<>();
+    private Set<Node> components;
+
+    /**
+     * хеш мапа с компонентами связаности где ключь ее номер
+     */
+    private HashMap<Integer, Set<Node>> connectedComponents = new HashMap<>();
+
+    /**
+     * список компонент которые нужно обединить
+     */
+    private ArrayList<ArrayList<Integer>> setsOfComponentsToGroup = new ArrayList<>();
 
     /**
      * Коструктор
@@ -24,27 +33,65 @@ public class ConnectedComponents {
      */
     public ConnectedComponents(Collection<Node> nodes) {
         for (Node node : nodes) {
-            this.nodes.put(node, Boolean.TRUE);
+            this.nodes.put(node, 0);
         }
     }
 
     /**
-     * обход в ширену компоненты связаности
-     * @param node вершина графа
+     * обход в ширену компонент связаности
+     *
+     * @param node           вершина графа
+     * @param componentIndex индекс компоненты
      */
-    private void dfs(Node node) {
-        this.nodes.put(node, Boolean.FALSE);
+    private void dfs(Node node, int componentIndex) {
+        this.nodes.put(node, componentIndex);
         components.add(node);
         Set<Node> links = node.getLinks();
         for (Node link : links) {
-            if (nodes.get(link)) {
-                dfs(link);
+            int groupNumber = nodes.get(link);
+            if (groupNumber == 0) {
+                // найдена вершина которую еще не обошли
+                dfs(link, componentIndex);
+            } else if (groupNumber != componentIndex) {
+                // надена связ с вершиной из другой группы
+                boolean componentWasAdd = false;
+                // проверка есть ли эта группа в списке на объединение
+                for (ArrayList<Integer> componentsToGroup : setsOfComponentsToGroup) {
+                    if (componentsToGroup.contains(groupNumber)) {
+                        componentsToGroup.add(componentIndex);
+                        componentWasAdd = true;
+                    }
+                }
+                // если нет то добовляем новый список на объединение
+                if (!componentWasAdd) {
+                    ArrayList<Integer> newSetOfComponentsToGroup = new ArrayList<>();
+                    newSetOfComponentsToGroup.add(componentIndex);
+                    newSetOfComponentsToGroup.add(groupNumber);
+                    setsOfComponentsToGroup.add(newSetOfComponentsToGroup);
+                }
             }
         }
     }
 
     /**
+     * объединяут связаные компонеты
+     */
+    private void groupComponents() {
+        for (ArrayList<Integer> componentsToGroup : setsOfComponentsToGroup) {
+            Integer firstComponentIndex = componentsToGroup.get(0);
+            componentsToGroup.remove(0);
+            Set<Node> firstSet = connectedComponents.get(firstComponentIndex);
+            for (Integer componentIndex : componentsToGroup) {
+                firstSet.addAll(connectedComponents.get(componentIndex));
+                connectedComponents.remove(componentIndex);
+            }
+            connectedComponents.put(firstComponentIndex, firstSet);
+        }
+    }
+
+    /**
      * Возврашает список компонент связаности
+     *
      * @return список компонент связаности
      */
     public Set<Set<Node>> getConnectedComponents() {
@@ -52,15 +99,16 @@ public class ConnectedComponents {
             return new HashSet<>();
         }
 
-        Set<Set<Node>> result = new HashSet<>();
+        int componentsNumber = 1;
         for (Node node : nodes.keySet()) {
-            if(nodes.get(node)) {
-                components.clear();
-                dfs(node);
-                result.add(new HashSet<>(components));
+            if (nodes.get(node) == 0) {
+                components = new HashSet<>();
+                dfs(node, componentsNumber);
+                connectedComponents.put(componentsNumber, components);
+                componentsNumber++;
             }
         }
-
-        return result;
+        groupComponents();
+        return new HashSet<>(connectedComponents.values());
     }
 }

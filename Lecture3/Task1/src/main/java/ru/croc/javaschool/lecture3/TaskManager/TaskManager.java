@@ -87,7 +87,7 @@ public class TaskManager {
      * @param code код задачи
      */
     public void removeTask(UUID code) {
-        tasks.removeIf(task -> task.getCode() == code);
+        tasks.removeIf(task -> task.getCode().equals(code));
     }
 
     /**
@@ -96,7 +96,7 @@ public class TaskManager {
      * @param id индентификатор
      */
     public void removePerformer(UUID id) {
-        performers.removeIf(performer -> performer.getId() == id);
+        performers.removeIf(performer -> performer.getId().equals(id));
     }
 
     /**

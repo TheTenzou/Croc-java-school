@@ -23,8 +23,8 @@ public class Application {
      * Приветсвуюшее сообшение.
      */
     private void printGreeting() {
-        System.out.println("системы ведения задач");
-        System.out.println("Введите команду:");
+        System.out.println("  Cистемы ведения задач");
+        System.out.println("  Введите команду:");
         System.out.print("> ");
     }
 
@@ -38,10 +38,6 @@ public class Application {
         System.out.println("  add performer - добавть исполнителя");
         System.out.println("  show tasks - отоюразть список задачь");
         System.out.println("  show performers - вывести список исполнителей");
-        System.out.println("  show task <code> - вывести задачу с заданым кодом");//sdf
-        System.out.println("  show performer <id> - вывести исполнителя c заданым id");//asdf
-        System.out.println("  show completed tasks - ");//asdf
-        System.out.println("  show uncompleted tasks - ");//adf
         System.out.println("  delete task <code> - удалить задачу с заданым кодом");
         System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
         System.out.println("  complete task <code> - изменить стаус задачи на завершить");
@@ -132,7 +128,37 @@ public class Application {
     }
 
     /**
-     * Из менить исполнителя.
+     * Удаление задачи.
+     * @param command команда
+     */
+    private void deleteTask(String command) {
+        UUID taskCode;
+        try {
+            taskCode = UUID.fromString(command.substring(12, 48));
+            taskManager.removeTask(taskCode);
+            System.out.println("  Задача была удалена");
+        } catch (Exception e) {
+            System.out.println("  Не удалось удалить задачу");
+        }
+    }
+
+    /**
+     * Удаление исполнителя.
+     * @param command команда
+     */
+    private void deletePerformer(String command) {
+        UUID performerId;
+        try {
+            performerId = UUID.fromString(command.substring(17, 53));
+            taskManager.removePerformer(performerId);
+            System.out.println("  Исполнитель был удален");
+        } catch (Exception e) {
+            System.out.println("  Не удалось удалить исполнителя");
+        }
+    }
+
+    /**
+     * Изменить исполнителя.
      * @param command команда
      */
     private void asignePerforemer(String command) {
@@ -168,14 +194,11 @@ public class Application {
         UUID taskUUDI;
         try {
             taskUUDI = UUID.fromString(command.substring(14, 50));
+            taskManager.getTask(taskUUDI).complete();
+            System.out.println("  Запись была успешно изменена");
         } catch (Exception e) {
             System.out.println("  Ошибка ввода кода задачи");
-            return;
         }
-
-        taskManager.getTask(taskUUDI).complete();
-
-        System.out.println("  Запись была успешно изменена");
     }
 
     /**
@@ -219,7 +242,14 @@ public class Application {
             } else if (command.equals("show performers")) {
                 application.displayPerformers();
                 System.out.println();
-            } else if (command.startsWith("asign performer")) {
+            }
+            else if (command.startsWith("delete task")) {
+                application.deleteTask(command);
+            }
+            else if (command.startsWith("delete performer")) {
+                application.deletePerformer(command);
+            }
+            else if (command.startsWith("asign performer")) {
                 application.asignePerforemer(command);
             } else if (command.startsWith("complete task")) {
                 application.completeTask(command);

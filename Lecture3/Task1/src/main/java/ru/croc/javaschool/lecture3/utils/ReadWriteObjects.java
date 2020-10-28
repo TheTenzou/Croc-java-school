@@ -5,6 +5,7 @@ import ru.croc.javaschool.lecture3.TaskManager.Task.Task;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Передоставляет функции для записи с чидаывния задачь и исполнителей в файл.
@@ -60,15 +61,17 @@ public class ReadWriteObjects {
     /**
      * Сохранение объекта в файл.
      *
-     * @param object   объект
+     * @param objects  объекты
      * @param fileName название файла
      */
-    public static void writeObject(Object object, String fileName) {
+    public static <T> void writeObjects(Collection<T> objects, String fileName) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            objectOutputStream.writeObject(object);
-            System.out.println("Запись сохранена");
+            for (T object : objects) {
+                objectOutputStream.writeObject(object);
+            }
+            System.out.println("Записи сохранены");
         } catch (Exception e) {
-            System.out.println("Не удалось сохоанить запись");
+            System.out.println("Не удалось сохоанить записи");
         }
     }
 }

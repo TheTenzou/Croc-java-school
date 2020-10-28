@@ -45,6 +45,7 @@ public class Application {
         System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
         System.out.println("  complete task <code> - изменить стаус задачи на завершить");
         System.out.println("  asign performer <performer-id> <task code> - ");
+        System.out.println("  save - охраинть изменеия");
     }
 
     /**
@@ -62,18 +63,14 @@ public class Application {
 
         try {
             Performer performer = taskManager.getPerformer(UUID.fromString(id));
-            Task task = new Task(name, description, performer);
-            taskManager.addTask(task);
-            ReadWriteObjects.writeObject(task, "tasks.out");
+            taskManager.addTask(new Task(name, description, performer));
         } catch (Exception e) {
             System.out.println("  Исполнитель не найден.");
             System.out.println("  Добавть задаче без исолнителя? (д/н)");
             String answer = scanner.nextLine().toLowerCase();
 
             if (answer.startsWith("l") || answer.startsWith("д")) {
-                Task task = new Task(name, description, null);
-                taskManager.addTask(task);
-                ReadWriteObjects.writeObject(task, "tasks.out");
+                taskManager.addTask(new Task(name, description, null));
             } else {
                 System.out.println("  Задача не добавленна");
             }
@@ -91,9 +88,7 @@ public class Application {
         System.out.print("  Фамилия: ");
         String secondName = scanner.nextLine();
 
-        Performer performer = new Performer(firstName, secondName);
-        taskManager.addPerformer(performer);
-        ReadWriteObjects.writeObject(performer, "performers.out");
+        taskManager.addPerformer(new Performer(firstName, secondName));
     }
 
     /**
@@ -164,6 +159,10 @@ public class Application {
         System.out.println("  Запись была успешно изменена");
     }
 
+    /**
+     * Заершить задачу.
+     * @param command команда
+     */
     private void completeTask(String command) {
         UUID taskUUDI;
         try {
@@ -176,6 +175,14 @@ public class Application {
         taskManager.getTask(taskUUDI).complete();
 
         System.out.println("  Запись была успешно изменена");
+    }
+
+    /**
+     * Сохранение изменеий.
+     */
+    private void save() {
+        ReadWriteObjects.writeObjects(taskManager.getTasks(), "tasks.out");
+        ReadWriteObjects.writeObjects(taskManager.getPerformers(), "performers.out");
     }
 
     public static void main(String[] args) {
@@ -205,7 +212,11 @@ public class Application {
                 application.asignePerforemer(command);
             } else if (command.startsWith("complete task")) {
                 application.completeTask(command);
-            } else if (command.equals("exti")) {
+            }
+            else if (command.equals("save")) {
+                application.save();
+            }
+            else if (command.equals("exit")) {
                 System.out.println("  Завершение работы.");
             } else {
                 System.out.println("  Команда " + command + " не сушествует");

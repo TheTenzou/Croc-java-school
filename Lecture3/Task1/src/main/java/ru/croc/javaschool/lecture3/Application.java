@@ -22,7 +22,7 @@ public class Application {
     /**
      * Приветсвуюшее сообшение.
      */
-    private void printGreeting() {
+    public void printGreeting() {
         System.out.println("  Cистемы ведения задач");
         System.out.println("  Введите команду:");
         System.out.print("> ");
@@ -31,7 +31,7 @@ public class Application {
     /**
      * Вывод на экран списка команд.
      */
-    private void printHelp() {
+    public void printHelp() {
         System.out.println("  help - список соманд");
         System.out.println("  exit - выход");
         System.out.println("  add task - добавить задачу");
@@ -48,7 +48,7 @@ public class Application {
     /**
      * Добавление задачи.
      */
-    private void addTask() {
+    public void addTask() {
         System.out.print("  Назвние: ");
         String name = scanner.nextLine();
 
@@ -77,7 +77,7 @@ public class Application {
     /**
      * Добалвение задачи.
      */
-    private void addPerformer() {
+    public void addPerformer() {
 
         System.out.print("  Имя: ");
         String firstName = scanner.nextLine();
@@ -91,7 +91,7 @@ public class Application {
     /**
      * Вывод на экран списка задачь.
      */
-    private void displayTasks() {
+    public void displayTasks() {
         for (Task task : taskManager.getTasks()) {
             System.out.println();
             System.out.println("  Код:        " + task.getCode());
@@ -118,7 +118,7 @@ public class Application {
     /**
      * Вывод на экран списка исполнителей.
      */
-    private void displayPerformers() {
+    public void displayPerformers() {
         for (Performer performer : taskManager.getPerformers()) {
             System.out.println();
             System.out.println("  Код:     " + performer.getId());
@@ -131,7 +131,7 @@ public class Application {
      * Удаление задачи.
      * @param command команда
      */
-    private void deleteTask(String command) {
+    public void deleteTask(String command) {
         UUID taskCode;
         try {
             taskCode = UUID.fromString(command.substring(12, 48));
@@ -146,7 +146,7 @@ public class Application {
      * Удаление исполнителя.
      * @param command команда
      */
-    private void deletePerformer(String command) {
+    public void deletePerformer(String command) {
         UUID performerId;
         try {
             performerId = UUID.fromString(command.substring(17, 53));
@@ -161,7 +161,7 @@ public class Application {
      * Изменить исполнителя.
      * @param command команда
      */
-    private void asignePerforemer(String command) {
+    public void asignePerforemer(String command) {
         UUID performerUUID;
         UUID taskUUID;
 
@@ -190,7 +190,7 @@ public class Application {
      * Заершить задачу.
      * @param command команда
      */
-    private void completeTask(String command) {
+    public void completeTask(String command) {
         UUID taskUUDI;
         try {
             taskUUDI = UUID.fromString(command.substring(14, 50));
@@ -204,7 +204,7 @@ public class Application {
     /**
      * Сохранение изменеий.
      */
-    private void save() {
+    public void save() {
         try {
             ReadWriteObjects.writeObjects(taskManager.getTasks(), "tasks.out");
             System.out.println("  Задачи сохранены");

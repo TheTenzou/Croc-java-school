@@ -8,7 +8,16 @@ import java.util.Collection;
 import java.util.Scanner;
 import java.util.UUID;
 
+/**
+ * Предостовляет функции для взаимодействия с пользователем.
+ */
 public class ConsoleInPutOutPut {
+
+    public static void printGreeting() {
+        System.out.println("системы ведения задач");
+        System.out.println("Введите команду:");
+        System.out.print("> ");
+    }
 
     /**
      * Вывод на экран списка команд.

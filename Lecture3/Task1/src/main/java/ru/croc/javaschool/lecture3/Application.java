@@ -9,16 +9,12 @@ import java.util.Scanner;
 
 public class Application {
 
-
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         TaskManager taskManager = new TaskManager(ReadWriteObjects.readTask(), ReadWriteObjects.readPerformers());
 
-        System.out.println("системы ведения задач");
-        System.out.println("Введите команду:");
-        System.out.print("> ");
+        ConsoleInPutOutPut.printGreeting();
         String command;
         do {
             command = scanner.nextLine();

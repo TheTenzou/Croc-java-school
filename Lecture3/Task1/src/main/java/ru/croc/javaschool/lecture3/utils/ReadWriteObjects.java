@@ -3,9 +3,7 @@ package ru.croc.javaschool.lecture3.utils;
 import ru.croc.javaschool.lecture3.TaskManager.Task.Performer;
 import ru.croc.javaschool.lecture3.TaskManager.Task.Task;
 
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +54,21 @@ public class ReadWriteObjects {
             }
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Сохранение объекта в файл.
+     *
+     * @param object   объект
+     * @param fileName название файла
+     */
+    public static void writeObject(Object object, String fileName) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            objectOutputStream.writeObject(object);
+            System.out.println("Запись сохранена");
+        } catch (Exception e) {
+            System.out.println("Не удалось сохоанить запись");
         }
     }
 }

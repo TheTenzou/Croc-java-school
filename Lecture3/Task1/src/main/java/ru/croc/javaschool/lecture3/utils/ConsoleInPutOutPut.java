@@ -58,16 +58,18 @@ public class ConsoleInPutOutPut {
 
         try {
             Performer performer = taskManager.getPerformer(UUID.fromString(id));
-            taskManager.addTask(new Task(name, description, performer));
-            System.out.println("  Задача добавлена");
+            Task task = new Task(name, description, performer);
+            taskManager.addTask(task);
+            ReadWriteObjects.writeObject(task, "tasks.out");
         } catch (Exception e) {
             System.out.println("  Исполнитель не найден.");
             System.out.println("  Добавть задаче без исолнителя? (д/н)");
             String answer = scanner.nextLine().toLowerCase();
 
             if (answer.startsWith("l") || answer.startsWith("д")) {
-                taskManager.addTask(new Task(name, description, null));
-                System.out.println("  Задача добавлена");
+                Task task = new Task(name, description, null);
+                taskManager.addTask(task);
+                ReadWriteObjects.writeObject(task, "tasks.out");
             } else {
                 System.out.println("  Задача не добавленна");
             }
@@ -88,8 +90,9 @@ public class ConsoleInPutOutPut {
         System.out.print("  Фамилия: ");
         String secondName = scanner.nextLine();
 
-        taskManager.addPerformer(new Performer(firstName, secondName));
-        System.out.println("  Исполнитель добавлен");
+        Performer performer = new Performer(firstName, secondName);
+        taskManager.addPerformer(performer);
+        ReadWriteObjects.writeObject(performer, "performers.out");        
     }
 
     /**

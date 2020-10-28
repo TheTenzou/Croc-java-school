@@ -34,14 +34,6 @@ public class TaskManager {
     }
 
     /**
-     * Пустой коструктор.
-     */
-    public TaskManager() {
-        this.tasks = new ArrayList<>();
-        this.performers = new ArrayList<>();
-    }
-
-    /**
      * Дабавть задачу.
      *
      * @param task задача
@@ -104,7 +96,7 @@ public class TaskManager {
      * @param id индентификатор
      */
     public void removePerformer(UUID id) {
-        performers.removeIf(executor -> executor.getId() == id);
+        performers.removeIf(performer -> performer.getId() == id);
     }
 
     /**

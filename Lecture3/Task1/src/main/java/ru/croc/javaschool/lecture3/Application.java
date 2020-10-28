@@ -37,6 +37,9 @@ public class Application {
                     ConsoleInPutOutPut.displayPerformers(taskManager.getPerformers());
                     System.out.println();
                     break;
+                case "exit":
+                    System.out.println("Завершение работы.");
+                    break;
                 default:
                     System.out.println("Команда " + command + " не сушествует");
                     break;

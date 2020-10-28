@@ -36,7 +36,7 @@ public class ConsoleInPutOutPut {
         System.out.println("  delete task <code> - удалить задачу с заданым кодом");
         System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
         System.out.println("  complete task <code> - изменить стаус задачи на завершить");
-        System.out.println("  set performer <task code> <performer-id> - ");
+        System.out.println("  set performer <performer-id> <task code> - ");
     }
 
     /**
@@ -92,7 +92,7 @@ public class ConsoleInPutOutPut {
 
         Performer performer = new Performer(firstName, secondName);
         taskManager.addPerformer(performer);
-        ReadWriteObjects.writeObject(performer, "performers.out");        
+        ReadWriteObjects.writeObject(performer, "performers.out");
     }
 
     /**
@@ -136,5 +136,28 @@ public class ConsoleInPutOutPut {
             System.out.println("  Имя:     " + performer.getFirstName());
             System.out.println("  Фамилия: " + performer.getLastName());
         }
+    }
+
+    public static void asinePerforemer(TaskManager taskManager, String performerId, String taskCode) {
+        UUID performerUUID;
+        UUID taskUUID;
+
+        try {
+            performerUUID = UUID.fromString(performerId);
+        } catch (Exception e) {
+            System.out.println("Ошибка в индетификаторе исполнителя");
+            return;
+        }
+
+        try {
+            taskUUID = UUID.fromString(taskCode);
+        } catch (Exception e) {
+            System.out.println("шибка в коде задаачи");
+            return;
+        }
+
+        Task task = taskManager.getTask(taskUUID);
+        Performer performer = taskManager.getPerformer(performerUUID);
+        task.setPerformer(performer);
     }
 }

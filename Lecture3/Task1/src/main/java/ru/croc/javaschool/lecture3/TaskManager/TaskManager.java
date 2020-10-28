@@ -59,7 +59,7 @@ public class TaskManager {
      */
     public Task getTask(UUID code) {
         for (Task task : tasks) {
-            if (task.getCode() == code) {
+            if (task.getCode().equals(code)) {
                 return task;
             }
         }
@@ -74,7 +74,7 @@ public class TaskManager {
      */
     public Performer getPerformer(UUID id) {
         for (Performer executor : performers) {
-            if (executor.getId() == id) {
+            if (executor.getId().equals(id)) {
                 return executor;
             }
         }

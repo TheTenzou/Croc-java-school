@@ -36,7 +36,7 @@ public class ConsoleInPutOutPut {
         System.out.println("  delete task <code> - удалить задачу с заданым кодом");
         System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
         System.out.println("  complete task <code> - изменить стаус задачи на завершить");
-        System.out.println("  set performer <performer-id> <task code> - ");
+        System.out.println("  asign performer <performer-id> <task code> - ");
     }
 
     /**
@@ -108,10 +108,10 @@ public class ConsoleInPutOutPut {
             Performer performer = task.getPerformer();
 
             if (performer != null) {
-                System.out.println("  Имя:       " + performer.getFirstName());
-                System.out.println("  Фамилия:   " + performer.getFirstName());
+                System.out.println("  Имя:        " + performer.getFirstName());
+                System.out.println("  Фамилия:    " + performer.getFirstName());
             } else {
-                System.out.println("  Исполнитель: не назначен");
+                System.out.println("  Исполнитель:  не назначен");
             }
 
             if (task.getState()) {
@@ -138,7 +138,7 @@ public class ConsoleInPutOutPut {
         }
     }
 
-    public static void asinePerforemer(TaskManager taskManager, String performerId, String taskCode) {
+    public static void asignePerforemer(TaskManager taskManager, String performerId, String taskCode) {
         UUID performerUUID;
         UUID taskUUID;
 
@@ -159,5 +159,7 @@ public class ConsoleInPutOutPut {
         Task task = taskManager.getTask(taskUUID);
         Performer performer = taskManager.getPerformer(performerUUID);
         task.setPerformer(performer);
+
+        System.out.println("Запись была успешно изменена");
     }
 }

@@ -19,30 +19,40 @@ public class Application {
         do {
             command = scanner.nextLine();
 
-            switch (command) {
-                case "help":
-                    ConsoleInPutOutPut.printHelp();
-                    break;
-                case "add task":
-                    ConsoleInPutOutPut.addTask(taskManager);
-                    break;
-                case "add performer":
-                    ConsoleInPutOutPut.addPerformer(taskManager);
-                    break;
-                case "show tasks":
-                    ConsoleInPutOutPut.displayTasks(taskManager.getTasks());
-                    System.out.println();
-                    break;
-                case "show performers":
-                    ConsoleInPutOutPut.displayPerformers(taskManager.getPerformers());
-                    System.out.println();
-                    break;
-                case "exit":
-                    System.out.println("Завершение работы.");
-                    break;
-                default:
-                    System.out.println("Команда " + command + " не сушествует");
-                    break;
+            if (command.equals("help")) {
+                ConsoleInPutOutPut.printHelp();
+            }
+            else if (command.equals("add task")) {
+                ConsoleInPutOutPut.addTask(taskManager);
+            }
+            else if (command.equals("add performer")) {
+                ConsoleInPutOutPut.addPerformer(taskManager);
+            }
+            else if (command.equals("show tasks")) {
+                ConsoleInPutOutPut.displayTasks(taskManager.getTasks());
+                System.out.println();
+            }
+            else if (command.equals("show performers")) {
+                ConsoleInPutOutPut.displayPerformers(taskManager.getPerformers());
+                System.out.println();
+            }
+            else if (command.startsWith("asign performer")) {
+                String performerId;
+                String taskCode;
+                try {
+                    performerId = command.substring(16, 52);
+                    taskCode = command.substring(53, 89);
+                    ConsoleInPutOutPut.asignePerforemer(taskManager, performerId, taskCode);
+                } catch (Exception e) {
+                    System.out.println("Ошибка ввода кода задачи или исполнителя");
+                }
+//                ConsoleInPutOutPut.asignePerforemer(taskManager, );
+            }
+            else if (command.equals("exti")) {
+                System.out.println("Завершение работы.");
+            }
+            else {
+                System.out.println("Команда " + command + " не сушествует");
             }
             System.out.print("> ");
         } while (!command.equals("exit"));

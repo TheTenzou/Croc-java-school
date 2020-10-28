@@ -1,58 +1,214 @@
 package ru.croc.javaschool.lecture3;
 
+import ru.croc.javaschool.lecture3.TaskManager.Task.Performer;
+import ru.croc.javaschool.lecture3.TaskManager.Task.Task;
 import ru.croc.javaschool.lecture3.TaskManager.TaskManager;
-import ru.croc.javaschool.lecture3.utils.ConsoleInPutOutPut;
 import ru.croc.javaschool.lecture3.utils.ReadWriteObjects;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 
 public class Application {
 
+    TaskManager taskManager;
+    Scanner scanner = new Scanner(System.in);
+
+    public Application() {
+        taskManager = new TaskManager(ReadWriteObjects.readTask(), ReadWriteObjects.readPerformers());
+    }
+
+    /**
+     * Приветсвуюшее сообшение.
+     */
+    private void printGreeting() {
+        System.out.println("системы ведения задач");
+        System.out.println("Введите команду:");
+        System.out.print("> ");
+    }
+
+    /**
+     * Вывод на экран списка команд.
+     */
+    private void printHelp() {
+        System.out.println("  help - список соманд");
+        System.out.println("  exit - выход");
+        System.out.println("  add task - добавить задачу");
+        System.out.println("  add performer - добавть исполнителя");
+        System.out.println("  show tasks - отоюразть список задачь");
+        System.out.println("  show performers - вывести список исполнителей");
+        System.out.println("  show task <code> - вывести задачу с заданым кодом");//sdf
+        System.out.println("  show performer <id> - вывести исполнителя c заданым id");//asdf
+        System.out.println("  show completed tasks - ");//asdf
+        System.out.println("  show uncompleted tasks - ");//adf
+        System.out.println("  delete task <code> - удалить задачу с заданым кодом");
+        System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
+        System.out.println("  complete task <code> - изменить стаус задачи на завершить");
+        System.out.println("  asign performer <performer-id> <task code> - ");
+    }
+
+    /**
+     * Добавление задачи.
+     */
+    private void addTask() {
+        System.out.print("  Назвние: ");
+        String name = scanner.nextLine();
+
+        System.out.print("  Описание: ");
+        String description = scanner.nextLine();
+
+        System.out.print("  Исполнитель: ");
+        String id = scanner.nextLine();
+
+        try {
+            Performer performer = taskManager.getPerformer(UUID.fromString(id));
+            Task task = new Task(name, description, performer);
+            taskManager.addTask(task);
+            ReadWriteObjects.writeObject(task, "tasks.out");
+        } catch (Exception e) {
+            System.out.println("  Исполнитель не найден.");
+            System.out.println("  Добавть задаче без исолнителя? (д/н)");
+            String answer = scanner.nextLine().toLowerCase();
+
+            if (answer.startsWith("l") || answer.startsWith("д")) {
+                Task task = new Task(name, description, null);
+                taskManager.addTask(task);
+                ReadWriteObjects.writeObject(task, "tasks.out");
+            } else {
+                System.out.println("  Задача не добавленна");
+            }
+        }
+    }
+
+    /**
+     * Добалвение задачи.
+     */
+    private void addPerformer() {
+
+        System.out.print("  Имя: ");
+        String firstName = scanner.nextLine();
+
+        System.out.print("  Фамилия: ");
+        String secondName = scanner.nextLine();
+
+        Performer performer = new Performer(firstName, secondName);
+        taskManager.addPerformer(performer);
+        ReadWriteObjects.writeObject(performer, "performers.out");
+    }
+
+    /**
+     * Вывод на экран списка задачь.
+     */
+    private void displayTasks() {
+        for (Task task : taskManager.getTasks()) {
+            System.out.println();
+            System.out.println("  Код:        " + task.getCode());
+            System.out.println("  Назване:    " + task.getName());
+            Performer performer = task.getPerformer();
+
+            if (performer != null) {
+                System.out.println("  Имя:        " + performer.getFirstName());
+                System.out.println("  Фамилия:    " + performer.getFirstName());
+            } else {
+                System.out.println("  Исполнитель: не назначен");
+            }
+
+            if (task.getState()) {
+                System.out.println("  Состояние:   Завершен");
+            } else {
+                System.out.println("  Состояние:   Не завершен");
+            }
+
+            System.out.println("  Описание:    " + task.getDescription());
+        }
+    }
+
+    /**
+     * Вывод на экран списка исполнителей.
+     */
+    private void displayPerformers() {
+        for (Performer performer : taskManager.getPerformers()) {
+            System.out.println();
+            System.out.println("  Код:     " + performer.getId());
+            System.out.println("  Имя:     " + performer.getFirstName());
+            System.out.println("  Фамилия: " + performer.getLastName());
+        }
+    }
+
+    /**
+     * Из менить исполнителя.
+     * @param command команда
+     */
+    private void asignePerforemer(String command) {
+        UUID performerUUID;
+        UUID taskUUID;
+
+        try {
+            performerUUID = UUID.fromString(command.substring(16, 52));
+        } catch (Exception e) {
+            System.out.println("  Ошибка в индетификаторе исполнителя");
+            return;
+        }
+
+        try {
+            taskUUID = UUID.fromString(command.substring(53, 89));
+        } catch (Exception e) {
+            System.out.println("  Ошибка в коде задаачи");
+            return;
+        }
+
+        Task task = taskManager.getTask(taskUUID);
+        Performer performer = taskManager.getPerformer(performerUUID);
+        task.setPerformer(performer);
+
+        System.out.println("  Запись была успешно изменена");
+    }
+
+    private void completeTask(String command) {
+        UUID taskUUDI;
+        try {
+            taskUUDI = UUID.fromString(command.substring(14, 50));
+        } catch (Exception e) {
+            System.out.println("  Ошибка ввода кода задачи");
+            return;
+        }
+
+        taskManager.getTask(taskUUDI).complete();
+
+        System.out.println("  Запись была успешно изменена");
+    }
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
-        TaskManager taskManager = new TaskManager(ReadWriteObjects.readTask(), ReadWriteObjects.readPerformers());
+        Application application = new Application();
 
-        ConsoleInPutOutPut.printGreeting();
+        application.printGreeting();
         String command;
         do {
             command = scanner.nextLine();
 
             if (command.equals("help")) {
-                ConsoleInPutOutPut.printHelp();
-            }
-            else if (command.equals("add task")) {
-                ConsoleInPutOutPut.addTask(taskManager);
-            }
-            else if (command.equals("add performer")) {
-                ConsoleInPutOutPut.addPerformer(taskManager);
-            }
-            else if (command.equals("show tasks")) {
-                ConsoleInPutOutPut.displayTasks(taskManager.getTasks());
+                application.printHelp();
+            } else if (command.equals("add task")) {
+                application.addTask();
+            } else if (command.equals("add performer")) {
+                application.addPerformer();
+            } else if (command.equals("show tasks")) {
+                application.displayTasks();
                 System.out.println();
-            }
-            else if (command.equals("show performers")) {
-                ConsoleInPutOutPut.displayPerformers(taskManager.getPerformers());
+            } else if (command.equals("show performers")) {
+                application.displayPerformers();
                 System.out.println();
-            }
-            else if (command.startsWith("asign performer")) {
-                String performerId;
-                String taskCode;
-                try {
-                    performerId = command.substring(16, 52);
-                    taskCode = command.substring(53, 89);
-                    ConsoleInPutOutPut.asignePerforemer(taskManager, performerId, taskCode);
-                } catch (Exception e) {
-                    System.out.println("Ошибка ввода кода задачи или исполнителя");
-                }
-//                ConsoleInPutOutPut.asignePerforemer(taskManager, );
-            }
-            else if (command.equals("exti")) {
-                System.out.println("Завершение работы.");
-            }
-            else {
-                System.out.println("Команда " + command + " не сушествует");
+            } else if (command.startsWith("asign performer")) {
+                application.asignePerforemer(command);
+            } else if (command.startsWith("complete task")) {
+                application.completeTask(command);
+            } else if (command.equals("exti")) {
+                System.out.println("  Завершение работы.");
+            } else {
+                System.out.println("  Команда " + command + " не сушествует");
             }
             System.out.print("> ");
         } while (!command.equals("exit"));

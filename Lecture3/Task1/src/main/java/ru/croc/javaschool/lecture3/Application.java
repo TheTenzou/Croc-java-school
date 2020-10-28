@@ -1,8 +1,8 @@
 package ru.croc.javaschool.lecture3;
 
 import ru.croc.javaschool.lecture3.TaskManager.TaskManager;
-import ru.croc.javaschool.lecture3.TaskManager.utils.ConsoleInPutOutPut;
-import ru.croc.javaschool.lecture3.TaskManager.utils.ReadWriteObjects;
+import ru.croc.javaschool.lecture3.utils.ConsoleInPutOutPut;
+import ru.croc.javaschool.lecture3.utils.ReadWriteObjects;
 
 import java.util.Scanner;
 

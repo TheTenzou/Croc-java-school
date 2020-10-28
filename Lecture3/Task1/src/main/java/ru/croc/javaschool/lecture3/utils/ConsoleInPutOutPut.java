@@ -1,4 +1,4 @@
-package ru.croc.javaschool.lecture3.TaskManager.utils;
+package ru.croc.javaschool.lecture3.utils;
 
 import ru.croc.javaschool.lecture3.TaskManager.Task.Performer;
 import ru.croc.javaschool.lecture3.TaskManager.Task.Task;

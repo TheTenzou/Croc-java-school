@@ -5,6 +5,7 @@ import ru.croc.javaschool.lecture3.TaskManager.Task.Task;
 import ru.croc.javaschool.lecture3.TaskManager.TaskManager;
 import ru.croc.javaschool.lecture3.utils.ReadWriteObjects;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -181,8 +182,18 @@ public class Application {
      * Сохранение изменеий.
      */
     private void save() {
-        ReadWriteObjects.writeObjects(taskManager.getTasks(), "tasks.out");
-        ReadWriteObjects.writeObjects(taskManager.getPerformers(), "performers.out");
+        try {
+            ReadWriteObjects.writeObjects(taskManager.getTasks(), "tasks.out");
+            System.out.println("  Задачи сохранены");
+        } catch (IOException e) {
+            System.out.println("  Не удалось сохранить задачи");
+        }
+        try {
+            ReadWriteObjects.writeObjects(taskManager.getPerformers(), "performers.out");
+            System.out.println("  Исполнители сохранены");
+        } catch (IOException e) {
+            System.out.println("  Не удалось сохранить исполнителей");
+        }
     }
 
     public static void main(String[] args) {

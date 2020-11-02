@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Фильм со списком актеров и их ролей.
+ */
 @XmlRootElement(name = "film")
 public class FilmWithActors {
     /**

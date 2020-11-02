@@ -14,6 +14,9 @@ import java.util.List;
 
 public class JaxbConverterTest {
 
+    /**
+     * Проверка преобразования объекта к xml.
+     */
     @Test
     public void testCoverterFilmsToXml() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
@@ -31,6 +34,9 @@ public class JaxbConverterTest {
         Assertions.assertEquals(expectedXml, xml);
     }
 
+    /**
+     * Проверка преобразавания xml к объекту.
+     */
     @Test
     public void testConverterXmlToFilm() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();

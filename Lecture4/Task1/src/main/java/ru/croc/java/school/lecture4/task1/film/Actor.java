@@ -3,6 +3,9 @@ package ru.croc.java.school.lecture4.task1.film;
 import javax.xml.bind.annotation.XmlAttribute;
 import java.util.Objects;
 
+/**
+ * Актер.
+ */
 public class Actor {
     /**
      * Полное имя актера.

@@ -1,0 +1,8 @@
+<film>
+  <title>Назване</title>
+  <description>Описание</description>
+  <actors>
+    <actor name="Актер 1" age="30" role="Роль 1"/>
+    <actor name="Актер 2" age="23" role="Роль 2"/>
+  </actors>
+</film>

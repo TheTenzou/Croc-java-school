@@ -11,7 +11,7 @@ public class JaxbConverter {
 
     /**
      * Переобразует объект в xml.
-     * @param obj объует
+     * @param obj объект
      * @return строкове представлени xml
      */
     public String toXml(Object obj) throws JsonProcessingException {

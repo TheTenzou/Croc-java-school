@@ -1,0 +1,8 @@
+<actor>
+  <name>Имя</name>
+  <age>27</age>
+  <films>
+    <film title="Фильм 1" role="Роль 1"/>
+    <film title="Фильм 2" role="Роль 2"/>
+  </films>
+</actor>

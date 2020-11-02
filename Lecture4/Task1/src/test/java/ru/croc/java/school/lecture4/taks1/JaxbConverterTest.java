@@ -1,7 +1,11 @@
 package ru.croc.java.school.lecture4.taks1;
 
+import jdk.jfr.Name;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.croc.java.school.lecture4.task1.actor.ActorWithFilms;
+import ru.croc.java.school.lecture4.task1.actor.Film;
 import ru.croc.java.school.lecture4.task1.film.Actor;
 import ru.croc.java.school.lecture4.task1.film.FilmWithActors;
 import ru.croc.java.school.lecture4.task1.JaxbConverter;
@@ -15,7 +19,7 @@ import java.util.List;
 public class JaxbConverterTest {
 
     /**
-     * Проверка преобразования объекта к xml.
+     * Проверка преобразования фильма к xml.
      */
     @Test
     public void testCoverterFilmsToXml() throws Exception {
@@ -35,7 +39,7 @@ public class JaxbConverterTest {
     }
 
     /**
-     * Проверка преобразавания xml к объекту.
+     * Проверка преобразавания xml к фильму.
      */
     @Test
     public void testConverterXmlToFilm() throws Exception {
@@ -52,5 +56,45 @@ public class JaxbConverterTest {
         FilmWithActors expectedFilm = new FilmWithActors("Назване", "Описание", actors);
 
         Assertions.assertEquals(expectedFilm, film);
+    }
+
+    /**
+     * Проверка преобразования актера к xml.
+     */
+    @Test
+    public void testConvertActorToXml() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+        List<Film> actors = Arrays.asList(
+                new Film("Фильм 1", "Роль 1"),
+                new Film("Фильм 2", "Роль 2")
+        );
+        ActorWithFilms actor = new ActorWithFilms("Имя", 27, actors);
+
+        String xml = jaxbConverter.toXml(actor);
+        Path path = Paths.get("src/main/resources", "ActorTest.xml");
+        String expectedXml = Files.readString(path);
+
+        Assertions.assertEquals(expectedXml, xml);
+
+    }
+
+    /**
+     * Проверка преобразавания xml к актеру.
+     */
+    @Test
+    public void testConverterXmlToActor() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+        Path path = Paths.get("src/main/resources", "ActorTest.xml");
+        String xml = Files.readString(path);
+
+        ActorWithFilms actor = jaxbConverter.fromXml(xml, ActorWithFilms.class);
+
+        List<Film> actors = Arrays.asList(
+                new Film("Фильм 1", "Роль 1"),
+                new Film("Фильм 2", "Роль 2")
+        );
+        ActorWithFilms expectedActor = new ActorWithFilms("Имя", 27, actors);
+
+        Assertions.assertEquals(expectedActor, actor);
     }
 }

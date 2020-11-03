@@ -3,6 +3,7 @@ package ru.croc.java.school.lecture4.task1.actor;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,8 +42,22 @@ public class ActorWithFilms {
         this.films = films;
     }
 
+    public ActorWithFilms(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.films = new ArrayList<>();
+    }
+
     public ActorWithFilms() {
 
+    }
+
+    /**
+     * Добавить фильм в список фильмов.
+     * @param film фильм
+     */
+    public void addFilm(Film film) {
+        this.films.add(film);
     }
 
     /**

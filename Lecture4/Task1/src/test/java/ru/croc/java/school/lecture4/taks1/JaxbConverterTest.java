@@ -3,6 +3,7 @@ package ru.croc.java.school.lecture4.taks1;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.croc.java.school.lecture4.task1.actor.ActorWithFilms;
+import ru.croc.java.school.lecture4.task1.actor.Actors;
 import ru.croc.java.school.lecture4.task1.actor.Film;
 import ru.croc.java.school.lecture4.task1.film.Actor;
 import ru.croc.java.school.lecture4.task1.film.FilmWithActors;
@@ -153,5 +154,82 @@ public class JaxbConverterTest {
         );
 
         Assertions.assertEquals(expectedFilms, films);
+    }
+
+    /**
+     * Проверка преобразования актеров к xml.
+     */
+    @Test
+    public void testConvertActorsToXml() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+
+        List<Film> filmsFirstActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 1")
+        );
+        List<Film> filmsSecondActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 2"),
+                new Film("Фильм 2", "Роль 5")
+        );
+        List<Film> filmsThirdActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 3"),
+                new Film("Фильм 2", "Роль 6")
+        );
+        List<Film> filmsFrothActor = Arrays.asList(
+                new Film("Фильм 2", "Роль 4")
+        );
+
+        Actors actors = new Actors(
+                Arrays.asList(
+                        new ActorWithFilms("Актер 1", 30, filmsFirstActor),
+                        new ActorWithFilms("Актер 2", 23, filmsSecondActor),
+                        new ActorWithFilms("Актер 3", 40, filmsThirdActor),
+                        new ActorWithFilms("Актер 4", 70, filmsFrothActor)
+                )
+        );
+
+        String xml = jaxbConverter.toXml(actors);
+
+        Path path = Paths.get("src/main/resources", "Actors.xml");
+        String expectedXml = Files.readString(path);
+
+        Assertions.assertEquals(expectedXml, xml);
+    }
+
+    /**
+     * Проверка преобразования xml к актерам.
+     */
+    @Test
+    public void testConvertXmlToActors() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+
+        Path path = Paths.get("src/main/resources", "Actors.xml");
+        String xml = Files.readString(path);
+
+        Actors actors = jaxbConverter.fromXml(xml, Actors.class);
+
+        List<Film> filmsFirstActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 1")
+        );
+        List<Film> filmsSecondActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 2"),
+                new Film("Фильм 2", "Роль 5")
+        );
+        List<Film> filmsThirdActor = Arrays.asList(
+                new Film("Фильм 1", "Роль 3"),
+                new Film("Фильм 2", "Роль 6")
+        );
+        List<Film> filmsFrothActor = Arrays.asList(
+                new Film("Фильм 2", "Роль 4")
+        );
+        Actors expectedActors = new Actors(
+                Arrays.asList(
+                        new ActorWithFilms("Актер 1", 30, filmsFirstActor),
+                        new ActorWithFilms("Актер 2", 23, filmsSecondActor),
+                        new ActorWithFilms("Актер 3", 40, filmsThirdActor),
+                        new ActorWithFilms("Актер 4", 70, filmsFrothActor)
+                )
+        );
+
+        Assertions.assertEquals(expectedActors, actors);
     }
 }

@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Список актеров с из ролями.
+ */
 @XmlRootElement(name = "actors")
 public class Actors {
     /**
@@ -15,6 +18,7 @@ public class Actors {
 
     /**
      * Конструктор.
+     *
      * @param actors список актеров
      */
     public Actors(List<ActorWithFilms> actors) {
@@ -30,12 +34,19 @@ public class Actors {
 
     /**
      * Возврашает список актеров.
-     * @param actors список актеров
+     *
+     * @return список актеров
      */
-    public void setActors(List<ActorWithFilms> actors) {
-        this.actors = actors;
+    public List<ActorWithFilms> getActors() {
+        return this.actors;
     }
 
+    /**
+     * Проверка являются ли обекты одинакавыми.
+     *
+     * @param o сравниваемый объект
+     * @return true если объекты одинаковые; false если разные
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,6 +55,11 @@ public class Actors {
         return Objects.equals(actors, actors1.actors);
     }
 
+    /**
+     * Возврашает хешкод объекта.
+     *
+     * @return заначение хешкода
+     */
     @Override
     public int hashCode() {
         return Objects.hash(actors);

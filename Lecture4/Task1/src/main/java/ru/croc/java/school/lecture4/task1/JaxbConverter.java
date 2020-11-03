@@ -7,6 +7,9 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
 import java.io.IOException;
 
+/**
+ * Сериализация и десириализиция объектов.
+ */
 public class JaxbConverter {
 
     /**

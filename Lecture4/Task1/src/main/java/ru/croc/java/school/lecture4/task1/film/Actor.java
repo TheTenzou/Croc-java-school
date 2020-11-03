@@ -36,8 +36,11 @@ public class Actor {
         this.role = role;
     }
 
-    public Actor () {
-
+    /**
+     * Пустой конструктор.
+     */
+    public Actor() {
+        this("Unnamed", 0, "None");
     }
 
     /**
@@ -67,6 +70,12 @@ public class Actor {
         return role;
     }
 
+    /**
+     * Проверка являются ли обекты одинакавыми.
+     *
+     * @param o сравниваемый объект
+     * @return true если объекты одинаковые; false если разные
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,17 +86,13 @@ public class Actor {
                 Objects.equals(role, actor.role);
     }
 
+    /**
+     * Возврашает хешкод объекта.
+     *
+     * @return заначение хешкода
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, age, role);
-    }
-
-    @Override
-    public String toString() {
-        return "Actor{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

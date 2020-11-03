@@ -3,6 +3,7 @@ package ru.croc.java.school.lecture4.task1.film;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,8 +42,11 @@ public class FilmWithActors {
         this.actors = actors;
     }
 
+    /**
+     * Пустой конструктор.
+     */
     public FilmWithActors() {
-
+        this("Untitled", "No description", new ArrayList<>());
     }
 
     /**
@@ -72,6 +76,12 @@ public class FilmWithActors {
         return actors;
     }
 
+    /**
+     * Проверка являются ли обекты одинакавыми.
+     *
+     * @param o сравниваемый объект
+     * @return true если объекты одинаковые; false если разные
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,17 +92,13 @@ public class FilmWithActors {
                 Objects.equals(actors, that.actors);
     }
 
+    /**
+     * Возврашает хешкод объекта.
+     *
+     * @return заначение хешкода
+     */
     @Override
     public int hashCode() {
         return Objects.hash(title, description, actors);
-    }
-
-    @Override
-    public String toString() {
-        return "FilmWithActors{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", actors=" + actors +
-                '}';
     }
 }

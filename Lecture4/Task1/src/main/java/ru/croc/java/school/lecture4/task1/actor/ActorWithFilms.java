@@ -42,18 +42,26 @@ public class ActorWithFilms {
         this.films = films;
     }
 
+    /**
+     * Конструктор актера без фильмов.
+     *
+     * @param name полное имя
+     * @param age  возраст
+     */
     public ActorWithFilms(String name, int age) {
-        this.name = name;
-        this.age = age;
-        this.films = new ArrayList<>();
+        this(name, age, new ArrayList<>());
     }
 
+    /**
+     * Пустой конструктор.
+     */
     public ActorWithFilms() {
-
+        this("UnNamed", 0);
     }
 
     /**
      * Добавить фильм в список фильмов.
+     *
      * @param film фильм
      */
     public void addFilm(Film film) {
@@ -87,6 +95,12 @@ public class ActorWithFilms {
         return films;
     }
 
+    /**
+     * Проверка являются ли обекты одинакавыми.
+     *
+     * @param o сравниваемый объект
+     * @return true если объекты одинаковые; false если разные
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +111,11 @@ public class ActorWithFilms {
                 Objects.equals(films, that.films);
     }
 
+    /**
+     * Возврашает хешкод объекта.
+     *
+     * @return заначение хешкода
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, age, films);

@@ -11,10 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс предоставляюший возможность преобразование xml.
+ */
 public class ConvertXml {
 
     /**
-     * Преобразование xml.
+     * Преобразование xml из списка фильмов с актерами к списку акторов с ролями.
      *
      * @param filmsXml исходная xml
      * @return преобразованная xml

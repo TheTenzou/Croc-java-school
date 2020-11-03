@@ -1,6 +1,7 @@
 package ru.croc.java.school.lecture4.taks1;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.croc.java.school.lecture4.task1.actor.ActorWithFilms;
 import ru.croc.java.school.lecture4.task1.actor.Actors;
@@ -22,6 +23,7 @@ public class JaxbConverterTest {
      * Проверка преобразования фильма к xml.
      */
     @Test
+    @DisplayName("Проверка преобразования фильма к xml")
     public void testCoverterFilmsToXml() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
         List<Actor> actors = Arrays.asList(
@@ -42,6 +44,7 @@ public class JaxbConverterTest {
      * Проверка преобразавания xml к фильму.
      */
     @Test
+    @DisplayName("Проверка преобразавания xml к фильму")
     public void testConverterXmlToFilm() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
         Path path = Paths.get("src/main/resources", "FilmTest.xml");
@@ -62,6 +65,7 @@ public class JaxbConverterTest {
      * Проверка преобразования актера к xml.
      */
     @Test
+    @DisplayName("Проверка преобразования актера к xml")
     public void testConvertActorToXml() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
         List<Film> actors = Arrays.asList(
@@ -82,6 +86,7 @@ public class JaxbConverterTest {
      * Проверка преобразавания xml к актеру.
      */
     @Test
+    @DisplayName("Проверка преобразавания xml к актеру")
     public void testConverterXmlToActor() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
         Path path = Paths.get("src/main/resources", "ActorTest.xml");
@@ -102,6 +107,7 @@ public class JaxbConverterTest {
      * Проверка преобразования Фильмов к xml.
      */
     @Test
+    @DisplayName("Проверка преобразования Фильмов к xml")
     public void testConvertFilmsToXml() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
         List<Actor> actorsFirstFilm = Arrays.asList(
@@ -131,6 +137,7 @@ public class JaxbConverterTest {
      * Проверка преобразования xml к фильмам.
      */
     @Test
+    @DisplayName("Проверка преобразования xml к фильмам")
     public void testConvertXmlToFilms() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
 
@@ -160,6 +167,7 @@ public class JaxbConverterTest {
      * Проверка преобразования актеров к xml.
      */
     @Test
+    @DisplayName("Проверка преобразования актеров к xml")
     public void testConvertActorsToXml() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
 
@@ -199,6 +207,7 @@ public class JaxbConverterTest {
      * Проверка преобразования xml к актерам.
      */
     @Test
+    @DisplayName("Проверка преобразования xml к актерам")
     public void testConvertXmlToActors() throws Exception {
         JaxbConverter jaxbConverter = new JaxbConverter();
 

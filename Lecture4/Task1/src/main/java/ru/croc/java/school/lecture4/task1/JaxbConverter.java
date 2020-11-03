@@ -11,6 +11,7 @@ public class JaxbConverter {
 
     /**
      * Переобразует объект в xml.
+     *
      * @param obj объект
      * @return строкове представлени xml
      */
@@ -21,7 +22,8 @@ public class JaxbConverter {
 
     /**
      * Преобразует xml в заданый объект.
-     * @param xml xml строка
+     *
+     * @param xml  xml строка
      * @param type тип к которому необходимо преобразовать
      * @return объект
      */
@@ -34,6 +36,7 @@ public class JaxbConverter {
         final XmlMapper mapper = new XmlMapper();
         JaxbAnnotationModule module = new JaxbAnnotationModule();
         mapper.registerModule(module);
+        mapper.setDefaultUseWrapper(false);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper;
     }

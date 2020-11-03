@@ -1,14 +1,13 @@
 package ru.croc.java.school.lecture4.taks1;
 
-import jdk.jfr.Name;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.croc.java.school.lecture4.task1.actor.ActorWithFilms;
 import ru.croc.java.school.lecture4.task1.actor.Film;
 import ru.croc.java.school.lecture4.task1.film.Actor;
 import ru.croc.java.school.lecture4.task1.film.FilmWithActors;
 import ru.croc.java.school.lecture4.task1.JaxbConverter;
+import ru.croc.java.school.lecture4.task1.film.Films;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,5 +95,63 @@ public class JaxbConverterTest {
         ActorWithFilms expectedActor = new ActorWithFilms("Имя", 27, actors);
 
         Assertions.assertEquals(expectedActor, actor);
+    }
+
+    /**
+     * Проверка преобразования Фильмов к xml.
+     */
+    @Test
+    public void testConvertFilmsToXml() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+        List<Actor> actorsFirstFilm = Arrays.asList(
+                new Actor("Актер 1", 30, "Роль 1"),
+                new Actor("Актер 2", 23, "Роль 2"),
+                new Actor("Актер 3", 40, "Роль 3")
+        );
+        List<Actor> actorsSecondfilm = Arrays.asList(
+                new Actor("Актер 4", 70, "Роль 4"),
+                new Actor("Актер 2", 23, "Роль 5"),
+                new Actor("Актер 3", 40, "Роль 6")
+        );
+        Films films = new Films(Arrays.asList(
+                new FilmWithActors("Фильм 1", "Описание 1", actorsFirstFilm),
+                new FilmWithActors("Фильм 2", "Описание 2", actorsSecondfilm))
+        );
+
+        String xml = jaxbConverter.toXml(films);
+
+        Path path = Paths.get("src/main/resources", "Films.xml");
+        String expectedXml = Files.readString(path);
+
+        Assertions.assertEquals(expectedXml, xml);
+    }
+
+    /**
+     * Проверка преобразования xml к фильмам.
+     */
+    @Test
+    public void testConvertXmlToFilms() throws Exception {
+        JaxbConverter jaxbConverter = new JaxbConverter();
+
+        Path path = Paths.get("src/main/resources", "Films.xml");
+        String xml = Files.readString(path);
+        Films films = jaxbConverter.fromXml(xml, Films.class);
+
+        List<Actor> actorsFirstFilm = Arrays.asList(
+                new Actor("Актер 1", 30, "Роль 1"),
+                new Actor("Актер 2", 23, "Роль 2"),
+                new Actor("Актер 3", 40, "Роль 3")
+        );
+        List<Actor> actorsSecondfilm = Arrays.asList(
+                new Actor("Актер 4", 70, "Роль 4"),
+                new Actor("Актер 2", 23, "Роль 5"),
+                new Actor("Актер 3", 40, "Роль 6")
+        );
+        Films expectedFilms = new Films(Arrays.asList(
+                new FilmWithActors("Фильм 1", "Описание 1", actorsFirstFilm),
+                new FilmWithActors("Фильм 2", "Описание 2", actorsSecondfilm))
+        );
+
+        Assertions.assertEquals(expectedFilms, films);
     }
 }

@@ -19,10 +19,16 @@ public class ApplicationTest {
      * массив с названиями файлов для тестов.
      */
     private static String[] filesName;
+
     /**
      * Конец стороки.
      */
     private final String endL = System.lineSeparator();
+
+    /**
+     * Стандартый вывод.
+     */
+    private final PrintStream sysOut = System.out;
 
     /**
      * Название файлов для тестов.
@@ -32,6 +38,7 @@ public class ApplicationTest {
         filesName = new String[2];
         filesName[0] = "TestConsoleTask.out";
         filesName[1] = "TestConsole.out";
+        System.setOut(new PrintStream(new ByteArrayOutputStream()));
     }
 
     /**
@@ -43,6 +50,7 @@ public class ApplicationTest {
         File performersFile = new File(filesName[1]);
         taskFile.delete();
         performersFile.delete();
+        System.setOut(sysOut);
     }
 
     /**
@@ -191,6 +199,44 @@ public class ApplicationTest {
         for (int i = 0; i < taskList.size(); ++i) {
             Assertions.assertEquals(expectedTaskList.get(i).getFirstName(), taskList.get(i).getFirstName());
             Assertions.assertEquals(expectedTaskList.get(i).getLastName(), taskList.get(i).getLastName());
+        }
+
+        System.setIn(sysInBackup);
+    }
+
+    /**
+     * Проверка завершения задачи.
+     */
+    @Test
+    public void testCompleteTask() throws IOException {
+
+        Task task1 = new Task("task1", "desc1", null);
+        Task task2 = new Task("task2", "desc2", null);
+        List<Task> expectedTaskList = Arrays.asList(task1, task2);
+
+        ReadWriteObjects.writeObjects(expectedTaskList, filesName[0]);
+
+        // Симулируем вод с пользователя.
+        InputStream sysInBackup = System.in;
+        ByteArrayInputStream in = new ByteArrayInputStream(("complete task " +
+                task1.getCode() + endL +
+                "save" + endL +
+                "exit" + endL).getBytes());
+        System.setIn(in);
+
+        Application.main(filesName);
+
+        task1.complete();
+        List<Task> taskList = ReadWriteObjects.readTask(filesName[0]);
+
+        // Объект task который создан в тесте и объект который создан при ваолнении команды ни разные
+        // и  поле code у них разный так это поле генирируется рандомно
+        Assertions.assertEquals(expectedTaskList.size(), taskList.size());
+        for (int i = 0; i < taskList.size(); ++i) {
+            Assertions.assertEquals(expectedTaskList.get(i).getName(), taskList.get(i).getName());
+            Assertions.assertEquals(expectedTaskList.get(i).getDescription(), taskList.get(i).getDescription());
+            Assertions.assertEquals(expectedTaskList.get(i).getState(), taskList.get(i).getState());
+            Assertions.assertEquals(expectedTaskList.get(i).getPerformer(), taskList.get(i).getPerformer());
         }
 
         System.setIn(sysInBackup);

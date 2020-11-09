@@ -65,11 +65,11 @@ public class ReadWriteObjects {
      * @param fileName название файла
      */
     public static <T> void writeObjects(Collection<T> objects, String fileName) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));) {
 
-        for (T object : objects) {
-            objectOutputStream.writeObject(object);
+            for (T object : objects) {
+                objectOutputStream.writeObject(object);
+            }
         }
-
     }
 }

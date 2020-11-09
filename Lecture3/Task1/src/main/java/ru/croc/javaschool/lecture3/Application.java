@@ -12,11 +12,38 @@ import java.util.UUID;
 
 public class Application {
 
-    TaskManager taskManager;
-    Scanner scanner = new Scanner(System.in);
+    /**
+     * Менеджер задач.
+     */
+    private TaskManager taskManager;
 
-    public Application() {
-        taskManager = new TaskManager(ReadWriteObjects.readTask(), ReadWriteObjects.readPerformers());
+    /**
+     * Сканер.
+     */
+    private Scanner scanner;
+
+    /**
+     * Имя файла с задачим.
+     */
+    private String taskFileName;
+
+    /**
+     * Имя файла с исполнителями.
+     */
+    private String performersFileName;
+
+    /**
+     * Конструктор.
+     *
+     * @param taskFileName       название файла с задачами
+     * @param performersFileName название файла с исполнителями
+     * @param scanner            сканер для считывания данных
+     */
+    public Application(String taskFileName, String performersFileName, Scanner scanner) {
+        this.scanner = scanner;
+        this.taskFileName = taskFileName;
+        this.performersFileName = performersFileName;
+        taskManager = new TaskManager(ReadWriteObjects.readTask(taskFileName), ReadWriteObjects.readPerformers(performersFileName));
     }
 
     /**
@@ -41,7 +68,7 @@ public class Application {
         System.out.println("  delete task <code> - удалить задачу с заданым кодом");
         System.out.println("  delete performer <id> - удалить исполнителя c заданым id");
         System.out.println("  complete task <code> - изменить стаус задачи на завершить");
-        System.out.println("  asign performer <performer-id> <task code> - ");
+        System.out.println("  asign performer <performer-id> <task code> - назначить исполнитля задаче");
         System.out.println("  save - охраинть изменеия");
     }
 
@@ -129,6 +156,7 @@ public class Application {
 
     /**
      * Удаление задачи.
+     *
      * @param command команда
      */
     public void deleteTask(String command) {
@@ -144,6 +172,7 @@ public class Application {
 
     /**
      * Удаление исполнителя.
+     *
      * @param command команда
      */
     public void deletePerformer(String command) {
@@ -159,6 +188,7 @@ public class Application {
 
     /**
      * Изменить исполнителя.
+     *
      * @param command команда
      */
     public void asignePerforemer(String command) {
@@ -188,6 +218,7 @@ public class Application {
 
     /**
      * Заершить задачу.
+     *
      * @param command команда
      */
     public void completeTask(String command) {
@@ -206,13 +237,13 @@ public class Application {
      */
     public void save() {
         try {
-            ReadWriteObjects.writeObjects(taskManager.getTasks(), "tasks.out");
+            ReadWriteObjects.writeObjects(taskManager.getTasks(), taskFileName);
             System.out.println("  Задачи сохранены");
         } catch (IOException e) {
             System.out.println("  Не удалось сохранить задачи");
         }
         try {
-            ReadWriteObjects.writeObjects(taskManager.getPerformers(), "performers.out");
+            ReadWriteObjects.writeObjects(taskManager.getPerformers(), performersFileName);
             System.out.println("  Исполнители сохранены");
         } catch (IOException e) {
             System.out.println("  Не удалось сохранить исполнителей");
@@ -221,9 +252,17 @@ public class Application {
 
     public static void main(String[] args) {
 
+        String taskFilename = "tasks.out";
+        String performersFileName = "performers.out";
+
+        if (args.length == 2) {
+            taskFilename = args[0];
+            performersFileName = args[1];
+        }
+
         Scanner scanner = new Scanner(System.in);
 
-        Application application = new Application();
+        Application application = new Application(taskFilename, performersFileName, scanner);
 
         application.printGreeting();
         String command;
@@ -242,22 +281,17 @@ public class Application {
             } else if (command.equals("show performers")) {
                 application.displayPerformers();
                 System.out.println();
-            }
-            else if (command.startsWith("delete task")) {
+            } else if (command.startsWith("delete task")) {
                 application.deleteTask(command);
-            }
-            else if (command.startsWith("delete performer")) {
+            } else if (command.startsWith("delete performer")) {
                 application.deletePerformer(command);
-            }
-            else if (command.startsWith("asign performer")) {
+            } else if (command.startsWith("asign performer")) {
                 application.asignePerforemer(command);
             } else if (command.startsWith("complete task")) {
                 application.completeTask(command);
-            }
-            else if (command.equals("save")) {
+            } else if (command.equals("save")) {
                 application.save();
-            }
-            else if (command.equals("exit")) {
+            } else if (command.equals("exit")) {
                 System.out.println("  Завершение работы.");
             } else {
                 System.out.println("  Команда " + command + " не сушествует");

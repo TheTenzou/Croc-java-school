@@ -16,6 +16,7 @@ public class ReadWriteObjectsTest {
 
     /**
      * Проверка чтения изаписи задач.
+     *
      * @throws IOException ошибка работы с файлом.
      */
     @Test
@@ -37,6 +38,7 @@ public class ReadWriteObjectsTest {
 
     /**
      * Проверка чтения изаписи сполнителей.
+     *
      * @throws IOException ошибка работы с файлом.
      */
     @Test

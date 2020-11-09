@@ -17,8 +17,8 @@ public class ReadWriteObjects {
      *
      * @return список задачь
      */
-    public static ArrayList<Task> readTask() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("tasks.out"))) {
+    public static ArrayList<Task> readTask(String fileName) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
 
             ArrayList<Task> tasks = new ArrayList<>();
 
@@ -40,8 +40,8 @@ public class ReadWriteObjects {
      *
      * @return список исполнителей
      */
-    public static ArrayList<Performer> readPerformers() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("performers.out"))) {
+    public static ArrayList<Performer> readPerformers(String fileName) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileName))) {
 
             ArrayList<Performer> tasks = new ArrayList<>();
 

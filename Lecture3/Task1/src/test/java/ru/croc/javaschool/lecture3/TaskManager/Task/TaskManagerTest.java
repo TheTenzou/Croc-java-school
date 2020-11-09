@@ -1,9 +1,10 @@
-package ru.croc.javaschool.lecture3.TaskManager;
+package ru.croc.javaschool.lecture3.TaskManager.Task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import ru.croc.javaschool.lecture3.TaskManager.Task.Performer;
 import ru.croc.javaschool.lecture3.TaskManager.Task.Task;
+import ru.croc.javaschool.lecture3.TaskManager.TaskManager;
 
 import java.util.ArrayList;
 import java.util.UUID;

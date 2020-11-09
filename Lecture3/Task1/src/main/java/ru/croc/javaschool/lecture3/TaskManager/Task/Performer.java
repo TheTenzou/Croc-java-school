@@ -1,6 +1,7 @@
 package ru.croc.javaschool.lecture3.TaskManager.Task;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -61,6 +62,21 @@ public class Performer implements Serializable {
      */
     public String getLastName() {
         return lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Performer performer = (Performer) o;
+        return Objects.equals(id, performer.id) &&
+                Objects.equals(firstName, performer.firstName) &&
+                Objects.equals(lastName, performer.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName);
     }
 
     @Override

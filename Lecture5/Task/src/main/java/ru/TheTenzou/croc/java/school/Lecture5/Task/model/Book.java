@@ -16,7 +16,7 @@ public class Book {
     /**
      * Название книги.
      */
-    private String name;
+    private String title;
 
     /**
      * Полное имя автора.
@@ -42,15 +42,15 @@ public class Book {
     /**
      * Конструктор.
      *
-     * @param name                 название книги
+     * @param title                название книги
      * @param athorFullName        полное имя автора книги
      * @param isNew                является ли книга новой
      * @param releaseDate          дата выпуска книги
      * @param avaliabilityDateTime время получения книги
      */
-    public Book(String name, String athorFullName, boolean isNew,
+    public Book(String title, String athorFullName, boolean isNew,
                 LocalDate releaseDate, LocalDateTime avaliabilityDateTime) {
-        this.name = name;
+        this.title = title;
         this.athorFullName = athorFullName;
         this.isNew = isNew;
         this.releaseDate = releaseDate;
@@ -61,8 +61,8 @@ public class Book {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public String getAthorFullName() {
@@ -85,8 +85,8 @@ public class Book {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setAthorFullName(String athorFullName) {

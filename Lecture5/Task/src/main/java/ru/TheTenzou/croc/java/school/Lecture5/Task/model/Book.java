@@ -42,16 +42,14 @@ public class Book {
     /**
      * Конструктор.
      *
-     * @param id                   индетификатор книги
      * @param name                 название книги
      * @param athorFullName        полное имя автора книги
      * @param isNew                является ли книга новой
      * @param releaseDate          дата выпуска книги
      * @param avaliabilityDateTime время получения книги
      */
-    public Book(int id, String name, String athorFullName, boolean isNew,
+    public Book(String name, String athorFullName, boolean isNew,
                 LocalDate releaseDate, LocalDateTime avaliabilityDateTime) {
-        this.id = id;
         this.name = name;
         this.athorFullName = athorFullName;
         this.isNew = isNew;
@@ -81,5 +79,29 @@ public class Book {
 
     public LocalDateTime getAvaliabilityDateTime() {
         return avaliabilityDateTime;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAthorFullName(String athorFullName) {
+        this.athorFullName = athorFullName;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setAvaliabilityDateTime(LocalDateTime avaliabilityDateTime) {
+        this.avaliabilityDateTime = avaliabilityDateTime;
     }
 }

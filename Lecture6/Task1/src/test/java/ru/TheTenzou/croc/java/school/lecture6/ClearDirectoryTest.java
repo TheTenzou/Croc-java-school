@@ -18,6 +18,9 @@ public class ClearDirectoryTest {
      */
     private static File temp_directory;
 
+    /**
+     * Создание директории.
+     */
     @BeforeAll
     public static void initTestFilder() throws IOException {
         temp_directory = Files.createDirectory(Path.of("folderForTest")).toFile();
@@ -27,9 +30,12 @@ public class ClearDirectoryTest {
         file.createNewFile();
     }
 
+    /**
+     * Провека очиски директории.
+     */
     @Test
     public void testClearDirectory() throws IOException {
-
+        
         int timeInterval = 2;
 
         ClearDirectory clearDirectory = new ClearDirectory(temp_directory, timeInterval);

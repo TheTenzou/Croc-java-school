@@ -54,6 +54,11 @@ public class ClearDirectoryRunnable implements Runnable {
         }
     }
 
+    /**
+     * Удаление директории и всех вложеных файлов.
+     *
+     * @param directory директория
+     */
     private void deleteDirectory(File directory) {
         File[] paths = directory.listFiles();
         if (paths != null) {

@@ -71,4 +71,34 @@ public class ClearDirectoryTest {
         Assertions.assertEquals(timeInterval, secondIntervalSeconds);
     }
 
+
+    @Test
+    public void testNestedDirectories() throws IOException {
+
+        int timeInterval = 2;
+
+        ClearDirectory clearDirectory = new ClearDirectory(temp_directory, timeInterval);
+        clearDirectory.start();
+
+        // ждем очестки папки
+        while (temp_directory.listFiles().length != 0) { }
+        LocalDateTime clearFirstTime = LocalDateTime.now();
+
+        // создаем файл
+        File inerDirectory = new File(temp_directory, "inerDirectory");
+        inerDirectory.mkdir();
+        File file = new File(inerDirectory, "test.txt");
+        file.createNewFile();
+        File emptyInerDirectory = new File(temp_directory, "empty");
+        emptyInerDirectory.mkdir();
+
+        // ждем очестки папки
+        while (temp_directory.listFiles().length != 0) { }
+        LocalDateTime clearSecondTime = LocalDateTime.now();
+
+        long miles = clearFirstTime.until(clearSecondTime, ChronoUnit.MILLIS);
+        int seconds = Math.round(miles / 1_000f);
+
+        Assertions.assertEquals(timeInterval, seconds);
+    }
 }

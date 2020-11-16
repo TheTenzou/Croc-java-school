@@ -34,7 +34,9 @@ public class ClearDirectory {
     /**
      * Останвит поток.
      */
-    public void stop() {
+    public void stop() throws InterruptedException {
         this.thread.interrupt();
+        // ждем пока поток завершится
+        this.thread.join();
     }
 }

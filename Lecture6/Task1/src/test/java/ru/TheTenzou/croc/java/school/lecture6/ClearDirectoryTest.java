@@ -1,9 +1,6 @@
 package ru.TheTenzou.croc.java.school.lecture6;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,14 +46,29 @@ public class ClearDirectoryTest {
         directory.delete();
     }
 
+    @BeforeEach
+    public void populateFolder() throws IOException {
+        File file = new File(temp_directory, "test.txt");
+        file.createNewFile();
+    }
+
+    @AfterEach
+    public void clearFolder() {
+        File[] files = temp_directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                deleteFolder(file);
+            }
+        }
+    }
+
     /**
      * Провека очиски директории.
      */
     @Test
-    public void testClearDirectory() throws IOException {
+    public void testClearDirectory() throws IOException, InterruptedException {
 
         int timeInterval = 1;
-
         ClearDirectory clearDirectory = new ClearDirectory(temp_directory, timeInterval);
         clearDirectory.start();
 
@@ -64,6 +76,7 @@ public class ClearDirectoryTest {
         while (temp_directory.listFiles().length != 0) {
         }
         LocalDateTime clearFirstTime = LocalDateTime.now();
+        // туту
 
         // создаем файл
         File file = new File(temp_directory, "test.txt");
@@ -94,13 +107,14 @@ public class ClearDirectoryTest {
         Assertions.assertEquals(timeInterval, secondIntervalSeconds);
 
         clearDirectory.stop();
+
     }
 
     /**
      * Провека удаления вложеных папок.
      */
     @Test
-    public void testNestedDirectories() throws IOException {
+    public void testNestedDirectories() throws IOException, InterruptedException {
 
         int timeInterval = 2;
 
@@ -113,9 +127,9 @@ public class ClearDirectoryTest {
         LocalDateTime clearFirstTime = LocalDateTime.now();
 
         // создаем файл
-        File inerDirectory = new File(temp_directory, "inerDirectory");
-        inerDirectory.mkdir();
-        File file = new File(inerDirectory, "test.txt");
+        File innerDirectory = new File(temp_directory, "inerDirectory");
+        innerDirectory.mkdir();
+        File file = new File(innerDirectory, "test.txt");
         file.createNewFile();
         File emptyInerDirectory = new File(temp_directory, "empty");
         emptyInerDirectory.mkdir();
@@ -131,5 +145,23 @@ public class ClearDirectoryTest {
         Assertions.assertEquals(timeInterval, seconds);
 
         clearDirectory.stop();
+    }
+
+    /**
+     * Провекрка остановки потока.
+     */
+    @Test
+    public void testStop() throws InterruptedException {
+
+        int timeInterval = 1;
+
+        int threadCountBefore = Thread.activeCount();
+        ClearDirectory clearDirectory = new ClearDirectory(temp_directory, timeInterval);
+        clearDirectory.start();
+        clearDirectory.stop();
+
+        int threadCountAfter = Thread.activeCount();
+
+        Assertions.assertEquals(threadCountBefore, threadCountAfter);
     }
 }

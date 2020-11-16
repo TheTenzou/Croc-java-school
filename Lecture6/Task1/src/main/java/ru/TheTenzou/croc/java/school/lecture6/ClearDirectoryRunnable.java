@@ -45,10 +45,10 @@ public class ClearDirectoryRunnable implements Runnable {
                 try {
                     Thread.sleep(timeInterval);
                 } catch (InterruptedException e) {
-                    return;
+                    break;
                 }
             } else {
-                return;
+                break;
             }
         }
     }

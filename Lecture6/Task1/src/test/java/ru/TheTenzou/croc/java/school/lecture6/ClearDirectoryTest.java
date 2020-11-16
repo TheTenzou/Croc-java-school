@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -23,7 +21,8 @@ public class ClearDirectoryTest {
      */
     @BeforeAll
     public static void initTestFilder() throws IOException {
-        temp_directory = Files.createDirectory(Path.of("folderForTest")).toFile();
+        temp_directory = new File("folderForTest");
+        temp_directory.mkdir();
         temp_directory.deleteOnExit();
 
         File file = new File(temp_directory, "filename.txt");
@@ -35,8 +34,8 @@ public class ClearDirectoryTest {
      */
     @Test
     public void testClearDirectory() throws IOException {
-        
-        int timeInterval = 2;
+
+        int timeInterval = 1;
 
         ClearDirectory clearDirectory = new ClearDirectory(temp_directory, timeInterval);
         clearDirectory.start();

@@ -14,7 +14,7 @@ public class FindMax<T extends Comparable<T>> implements Callable<T> {
     /**
      * Сортируемы массив
      */
-    private Collection<T> collection;
+    private final Collection<T> collection;
 
     /**
      * Конструктор.

@@ -16,12 +16,12 @@ public class FindMaxMultythread<T extends Comparable<T>> {
     /**
      * Колличество потоков.
      */
-    private int threadCount;
+    private final int threadCount;
 
     /**
      * Пул потоков.
      */
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     /**
      * Конструктор.
@@ -42,10 +42,15 @@ public class FindMaxMultythread<T extends Comparable<T>> {
      * @throws InterruptedException ошибка прирывания потока
      */
     public T findMax(Collection<T> collection) throws ExecutionException, InterruptedException {
+        // если коллекция меньше чем коллччество потоков то нет смысла делить
+        if (collection.size() <= threadCount) {
+            return Collections.max(collection);
+        }
+
         List<Future<T>> futures = new ArrayList<>(threadCount);
         ArrayList<Collection<T>> splitedColections = splitColletion(collection, threadCount);
 
-        for (int i = 0; i < threadCount; i++) {
+        for (int i = 0; i < splitedColections.size(); i++) {
             Callable<T> maxInSplit = new FindMax<>(splitedColections.get(i));
             Future<T> future = executorService.submit(maxInSplit);
             futures.add(i, future);

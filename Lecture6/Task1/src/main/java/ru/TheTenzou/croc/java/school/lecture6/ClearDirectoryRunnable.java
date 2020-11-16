@@ -1,9 +1,6 @@
 package ru.TheTenzou.croc.java.school.lecture6;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Поток очишаюший директорию.

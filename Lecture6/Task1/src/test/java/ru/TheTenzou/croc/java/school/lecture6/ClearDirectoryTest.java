@@ -1,5 +1,6 @@
 package ru.TheTenzou.croc.java.school.lecture6;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,13 +21,32 @@ public class ClearDirectoryTest {
      * Создание директории.
      */
     @BeforeAll
-    public static void initTestFilder() throws IOException {
+    public static void initTestDirectory() throws IOException {
         temp_directory = new File("folderForTest");
         temp_directory.mkdir();
-        temp_directory.deleteOnExit();
+    }
 
-        File file = new File(temp_directory, "filename.txt");
-        file.createNewFile();
+    /**
+     * Удалени папки и ее содерхимого.
+     */
+    @AfterAll
+    public static void deleteTestDirectory() {
+        deleteFolder(temp_directory);
+    }
+
+    /**
+     * Метод удаляюший папку.
+     *
+     * @param directory удаляемая папка
+     */
+    private static void deleteFolder(File directory) {
+        File[] directorys = directory.listFiles();
+        if (directorys != null) {
+            for (File file : directorys) {
+                deleteFolder(file);
+            }
+        }
+        directory.delete();
     }
 
     /**
@@ -41,7 +61,8 @@ public class ClearDirectoryTest {
         clearDirectory.start();
 
         // ждем очестки папки
-        while (temp_directory.listFiles().length != 0) { }
+        while (temp_directory.listFiles().length != 0) {
+        }
         LocalDateTime clearFirstTime = LocalDateTime.now();
 
         // создаем файл
@@ -49,7 +70,8 @@ public class ClearDirectoryTest {
         file.createNewFile();
 
         // ждем очестки папки
-        while (temp_directory.listFiles().length != 0) { }
+        while (temp_directory.listFiles().length != 0) {
+        }
         LocalDateTime clearSecondTime = LocalDateTime.now();
 
         // создаем файл
@@ -57,7 +79,8 @@ public class ClearDirectoryTest {
         file.createNewFile();
 
         // ждем очестки папки
-        while (temp_directory.listFiles().length != 0) { }
+        while (temp_directory.listFiles().length != 0) {
+        }
         LocalDateTime clearThirdTime = LocalDateTime.now();
 
         // время между очистками файлов
@@ -69,9 +92,13 @@ public class ClearDirectoryTest {
 
         Assertions.assertEquals(timeInterval, firstIntervalSeconds);
         Assertions.assertEquals(timeInterval, secondIntervalSeconds);
+
+        clearDirectory.stop();
     }
 
-
+    /**
+     * Провека удаления вложеных папок.
+     */
     @Test
     public void testNestedDirectories() throws IOException {
 
@@ -81,7 +108,8 @@ public class ClearDirectoryTest {
         clearDirectory.start();
 
         // ждем очестки папки
-        while (temp_directory.listFiles().length != 0) { }
+        while (temp_directory.listFiles().length != 0) {
+        }
         LocalDateTime clearFirstTime = LocalDateTime.now();
 
         // создаем файл
@@ -93,12 +121,15 @@ public class ClearDirectoryTest {
         emptyInerDirectory.mkdir();
 
         // ждем очестки папки
-        while (temp_directory.listFiles().length != 0) { }
+        while (temp_directory.listFiles().length != 0) {
+        }
         LocalDateTime clearSecondTime = LocalDateTime.now();
 
         long miles = clearFirstTime.until(clearSecondTime, ChronoUnit.MILLIS);
         int seconds = Math.round(miles / 1_000f);
 
         Assertions.assertEquals(timeInterval, seconds);
+
+        clearDirectory.stop();
     }
 }

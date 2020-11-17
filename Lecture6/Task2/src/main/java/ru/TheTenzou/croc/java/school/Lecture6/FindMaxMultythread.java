@@ -1,7 +1,6 @@
 package ru.TheTenzou.croc.java.school.Lecture6;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
@@ -41,14 +40,14 @@ public class FindMaxMultythread<T extends Comparable<T>> {
      * @throws ExecutionException   ошибка при получении результата
      * @throws InterruptedException ошибка прирывания потока
      */
-    public T findMax(Collection<T> collection) throws ExecutionException, InterruptedException {
+    public T findMax(List<T> collection) throws ExecutionException, InterruptedException {
         // если коллекция меньше чем коллччество потоков то нет смысла делить
         if (collection.size() <= threadCount) {
             return Collections.max(collection);
         }
 
         List<Future<T>> futures = new ArrayList<>(threadCount);
-        ArrayList<Collection<T>> splitedColections = splitColletion(collection, threadCount);
+        List<List<T>> splitedColections = splitColletion(collection, threadCount);
 
         for (int i = 0; i < splitedColections.size(); i++) {
             Callable<T> maxInSplit = new FindMax<>(splitedColections.get(i));
@@ -56,11 +55,16 @@ public class FindMaxMultythread<T extends Comparable<T>> {
             futures.add(i, future);
         }
 
+        System.out.println(Thread.activeCount());
+
         List<T> results = new ArrayList<>();
         for (Future<T> future : futures) {
             while (!future.isDone()) ;
             results.add(future.get());
         }
+
+        executorService.shutdown();
+
         return Collections.max(results);
     }
 
@@ -71,26 +75,17 @@ public class FindMaxMultythread<T extends Comparable<T>> {
      * @param splitsCount колличество честей
      * @return массив колеций
      */
-    private ArrayList<Collection<T>> splitColletion(Collection<T> collection, int splitsCount) {
-        ArrayList<Collection<T>> splits = new ArrayList<>(splitsCount);
-        int splitSize = Math.round(collection.size() / splitsCount);
+    private List<List<T>> splitColletion(List<T> collection, int splitsCount) {
 
-        int currentSplit = 0;
-        int currentElement = 0;
-        splits.add(new ArrayList<>());
-        for (T element : collection) {
-            if (currentElement >= splitSize) {
-                currentSplit++;
-                splits.add(new ArrayList<>());
-                currentElement = 0;
-                splits.get(currentSplit).add(element);
-            }
-            else {
-                splits.get(currentSplit).add(element);
-            }
-            currentElement++;
+        int i = 0;
+        List<List<T>> splitCollections = new ArrayList<>();
+        while (i < collection.size()) {
+            int nextInc = Math.min(collection.size() - i, splitsCount);
+            List<T> batch = collection.subList(i, i + nextInc);
+            splitCollections.add(batch);
+            i = i + nextInc;
         }
 
-        return splits;
+        return splitCollections;
     }
 }

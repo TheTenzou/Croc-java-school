@@ -2,6 +2,7 @@ package ru.TheTenzou.croc.java.school.Lecture6;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -14,14 +15,14 @@ public class FindMax<T extends Comparable<T>> implements Callable<T> {
     /**
      * Сортируемы массив
      */
-    private final Collection<T> collection;
+    private final List<T> collection;
 
     /**
      * Конструктор.
      *
      * @param collection коллекция
      */
-    public FindMax(Collection<T> collection) {
+    public FindMax(List<T> collection) {
         this.collection = collection;
     }
 

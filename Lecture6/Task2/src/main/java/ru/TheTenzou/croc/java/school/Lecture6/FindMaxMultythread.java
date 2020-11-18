@@ -41,7 +41,6 @@ public class FindMaxMultythread<T extends Comparable<T>> {
      * @throws InterruptedException ошибка прирывания потока
      */
     public T findMax(List<T> collection) throws ExecutionException, InterruptedException {
-        // если коллекция меньше чем коллччество потоков то нет смысла делить
         if (collection.size() <= threadCount) {
             return Collections.max(collection);
         }
@@ -54,8 +53,6 @@ public class FindMaxMultythread<T extends Comparable<T>> {
             Future<T> future = executorService.submit(maxInSplit);
             futures.add(i, future);
         }
-
-        System.out.println(Thread.activeCount());
 
         List<T> results = new ArrayList<>();
         for (Future<T> future : futures) {
@@ -79,8 +76,9 @@ public class FindMaxMultythread<T extends Comparable<T>> {
 
         int i = 0;
         List<List<T>> splitCollections = new ArrayList<>();
+        int chankSize = collection.size() / splitsCount;
         while (i < collection.size()) {
-            int nextInc = Math.min(collection.size() - i, splitsCount);
+            int nextInc = Math.min(collection.size() - i, chankSize);
             List<T> batch = collection.subList(i, i + nextInc);
             splitCollections.add(batch);
             i = i + nextInc;

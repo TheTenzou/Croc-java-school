@@ -21,15 +21,15 @@ public class FindMaxMultythreadTest {
         Random random = new Random();
         int expectedMax = random.nextInt();
         integerList.add(expectedMax);
-        for (int i = 0; i < 19_999_999; i++) {
+        for (int i = 0; i < 9_999_999; i++) {
             int integer = random.nextInt();
             integerList.add(integer);
             if (integer > expectedMax) {
-                expectedMax =  integer;
+                expectedMax = integer;
             }
         }
 
-        FindMaxMultythread<Integer> findMax = new FindMaxMultythread<>(40);
+        FindMaxMultythread<Integer> findMax = new FindMaxMultythread<>(4);
         Integer max = findMax.findMax(integerList);
 
         Assertions.assertEquals(expectedMax, max);

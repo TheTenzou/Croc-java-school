@@ -56,7 +56,6 @@ public class FindMaxMultythread<T extends Comparable<T>> {
 
         List<T> results = new ArrayList<>();
         for (Future<T> future : futures) {
-            while (!future.isDone()) ;
             results.add(future.get());
         }
 

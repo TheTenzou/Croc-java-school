@@ -1,12 +1,12 @@
 # Структура данных
 
 Структура таблицы заболевших:
-* фамилия строка,
-* имя строка,
-* отчество строка,
-* дата выявления дата,
-* дата выписки дата,
-* состояние(выздоровел, болеет, погиб) строка
+* first_name string,
+* midle_name string,
+* last_name string,
+* start_date date,
+* end_date date,
+* condition(recover, sick, died) string
 
 Структура xml
 ```xml

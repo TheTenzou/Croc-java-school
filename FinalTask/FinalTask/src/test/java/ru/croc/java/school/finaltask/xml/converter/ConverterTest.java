@@ -5,12 +5,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.croc.java.school.finaltask.xml.ResultStatistic;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class ConverterTest {
 
     @Test
-    public void testToXml() throws JsonProcessingException {
+    public void testToXml() throws IOException {
         ResultStatistic resultStatistic = new ResultStatistic(
                 LocalDate.of(2020, 10, 10),
                 LocalDate.of(2020, 10, 20),
@@ -21,12 +25,8 @@ public class ConverterTest {
 
         String xml = jaxbConverter.toXml(resultStatistic);
 
-        String expectedXml =
-                "<statistic>\r\n" +
-                "  <start-date>10.10.2020</start-date>\r\n" +
-                "  <end-date>20.10.2020</end-date>\r\n" +
-                "  <ratio>2.5</ratio>\r\n" +
-                "</statistic>\r\n";
+        Path path = Paths.get("src/test/resources", "test.xml");
+        String expectedXml = Files.readString(path);
 
         Assertions.assertEquals(expectedXml, xml);
     }

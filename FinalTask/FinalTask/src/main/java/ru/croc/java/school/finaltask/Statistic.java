@@ -60,15 +60,13 @@ public class Statistic {
      * @throws IOException ошибки при соохранении файла
      */
     public void saveResultsToFile(File file) throws IOException {
-        if (ratioStatistic != null) {
-            JaxbConverter jaxbConverter = new JaxbConverter();
-            String xml = jaxbConverter.toXml(ratioStatistic);
+        JaxbConverter jaxbConverter = new JaxbConverter();
+        String xml = jaxbConverter.toXml(ratioStatistic);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-            bufferedWriter.write(xml);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-        }
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        bufferedWriter.write(xml);
+        bufferedWriter.flush();
+        bufferedWriter.close();
     }
 
     public RecordRepository getRecordRepository() {

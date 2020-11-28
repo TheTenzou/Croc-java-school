@@ -1,4 +1,4 @@
-package ru.croc.java.school.finaltask.database;
+package ru.croc.java.school.finaltask.database.datasource;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
 

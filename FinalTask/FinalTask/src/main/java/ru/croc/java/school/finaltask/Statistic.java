@@ -1,7 +1,7 @@
 package ru.croc.java.school.finaltask;
 
-import ru.croc.java.school.finaltask.model.Record;
-import ru.croc.java.school.finaltask.repository.RecordRepository;
+import ru.croc.java.school.finaltask.database.model.Record;
+import ru.croc.java.school.finaltask.database.repository.RecordRepository;
 import ru.croc.java.school.finaltask.xml.ResultStatistic;
 import ru.croc.java.school.finaltask.xml.converter.JaxbConverter;
 

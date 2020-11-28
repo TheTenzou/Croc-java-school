@@ -1,9 +1,9 @@
 package ru.croc.java.school.finaltask;
 
 import org.junit.jupiter.api.*;
-import ru.croc.java.school.finaltask.database.DataSourceProvider;
-import ru.croc.java.school.finaltask.model.Record;
-import ru.croc.java.school.finaltask.repository.RecordRepository;
+import ru.croc.java.school.finaltask.database.datasource.DataSourceProvider;
+import ru.croc.java.school.finaltask.database.model.Record;
+import ru.croc.java.school.finaltask.database.repository.RecordRepository;
 import ru.croc.java.school.finaltask.xml.ResultStatistic;
 
 import java.io.File;
@@ -27,6 +27,9 @@ public class StatisticTest {
 
     private File testXml = new File("temp.xml");
 
+    /**
+     *
+     */
     @BeforeEach
     public void initRepository() throws IOException {
         DataSourceProvider dataSourceProvider = new DataSourceProvider();

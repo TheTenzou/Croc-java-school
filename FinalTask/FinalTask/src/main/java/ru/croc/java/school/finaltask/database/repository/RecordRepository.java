@@ -1,7 +1,7 @@
-package ru.croc.java.school.finaltask.repository;
+package ru.croc.java.school.finaltask.database.repository;
 
 import org.apache.derby.jdbc.EmbeddedDataSource;
-import ru.croc.java.school.finaltask.model.Record;
+import ru.croc.java.school.finaltask.database.model.Record;
 
 import java.sql.*;
 import java.util.ArrayList;

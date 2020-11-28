@@ -1,8 +1,8 @@
-package ru.croc.java.school.finaltask.repository;
+package ru.croc.java.school.finaltask.database.repository;
 
 import org.junit.jupiter.api.*;
-import ru.croc.java.school.finaltask.database.DataSourceProvider;
-import ru.croc.java.school.finaltask.model.Record;
+import ru.croc.java.school.finaltask.database.datasource.DataSourceProvider;
+import ru.croc.java.school.finaltask.database.model.Record;
 
 import javax.imageio.IIOException;
 import java.io.IOException;

@@ -21,11 +21,12 @@ public class ConverterTest {
 
         String xml = jaxbConverter.toXml(resultStatistic);
 
-        String expectedXml = "<statistic>\r\n" +
-                "   <start-date>10.10.2020</start-date>\r\n" +
-                "   <end-date>20.10.2020</end-date>\r\n" +
-                "   <ratio>2.5</ratio>\r\n" +
-                "</statistic>";
+        String expectedXml =
+                "<statistic>\r\n" +
+                "  <start-date>10.10.2020</start-date>\r\n" +
+                "  <end-date>20.10.2020</end-date>\r\n" +
+                "  <ratio>2.5</ratio>\r\n" +
+                "</statistic>\r\n";
 
         Assertions.assertEquals(expectedXml, xml);
     }

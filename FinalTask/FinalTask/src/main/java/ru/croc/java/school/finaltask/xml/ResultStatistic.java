@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Статистика по корона фирусной инфекции за задынный промкжуток.
@@ -48,6 +49,13 @@ public class ResultStatistic {
         this.ratio = ratio;
     }
 
+    /**
+     * Пустой конструктор.
+     */
+    public ResultStatistic() {
+        this(LocalDate.now(), LocalDate.now(), 1);
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -58,5 +66,20 @@ public class ResultStatistic {
 
     public double getRatio() {
         return ratio;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResultStatistic that = (ResultStatistic) o;
+        return Double.compare(that.ratio, ratio) == 0 &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startDate, endDate, ratio);
     }
 }

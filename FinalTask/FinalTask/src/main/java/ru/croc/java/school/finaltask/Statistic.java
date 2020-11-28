@@ -68,6 +68,9 @@ public class Statistic {
             String xml = jaxbConverter.toXml(resultStatistic);
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write(xml);
+            bufferedWriter.flush();
+            bufferedWriter.close();
         }
     }
 

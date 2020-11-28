@@ -9,6 +9,7 @@
 **/.idea/
 *.iml
 **/book
+**/corona_virus_statistic
 
 # User-specific stuff
 .idea/**/workspace.xml

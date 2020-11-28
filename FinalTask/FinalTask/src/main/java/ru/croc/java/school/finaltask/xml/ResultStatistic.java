@@ -1,4 +1,4 @@
-package ru.croc.java.school.finaltask;
+package ru.croc.java.school.finaltask.xml;
 
 import java.time.LocalDate;
 

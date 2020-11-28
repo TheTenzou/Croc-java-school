@@ -1,25 +1,31 @@
 package ru.croc.java.school.finaltask.xml;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDate;
 
 /**
  * Статистика по корона фирусной инфекции за задынный промкжуток.
  */
+@XmlRootElement(name = "statistic")
 public class ResultStatistic {
 
     /**
      * Начало временного промежутка.
      */
+    @XmlElement(name = "start-date")
     private LocalDate startDate;
 
     /**
      * Конец временного промежутка.
      */
+    @XmlElement(name = "end-date")
     private LocalDate endDate;
 
     /**
      * Соотношение между выписаными поциентами и новыми выявлеными случаями.
      */
+    @XmlElement
     private double ratio;
 
     /**

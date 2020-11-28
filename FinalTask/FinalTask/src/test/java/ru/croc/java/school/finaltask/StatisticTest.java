@@ -6,7 +6,11 @@ import ru.croc.java.school.finaltask.model.Record;
 import ru.croc.java.school.finaltask.repository.RecordRepository;
 import ru.croc.java.school.finaltask.xml.ResultStatistic;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +25,8 @@ public class StatisticTest {
      */
     private RecordRepository recordRepository;
 
+    private File testXml = new File("temp.xml");
+
     @BeforeEach
     public void initRepository() throws IOException {
         DataSourceProvider dataSourceProvider = new DataSourceProvider();
@@ -31,8 +37,9 @@ public class StatisticTest {
      * Удаление таблицы.
      */
     @AfterEach
-    public void dropTable() {
+    public void dropTable() throws IOException {
         recordRepository.dropTable();
+        Files.deleteIfExists(testXml.toPath());
     }
 
 
@@ -126,5 +133,34 @@ public class StatisticTest {
         ResultStatistic resultStatistic = new ResultStatistic(startDate, endDate, POSITIVE_INFINITY);
 
         Assertions.assertEquals(resultStatistic, statistic.getResultStatistic());
+    }
+
+    /**
+     * Проверка сохраненрия в файл.
+     */
+    @Test
+    @DisplayName("Проверка сохраненрия в файл")
+    public void testSaveResultsToFile() throws IOException {
+
+        Record record = new Record(
+                "city 17", LocalDate.of(2020,4,12),
+                2, 8, 4);
+        recordRepository.create(record);
+
+        Statistic statistic = new Statistic(recordRepository);
+
+        LocalDate startDate = LocalDate.of(2020, 4, 10);
+        LocalDate endDate = LocalDate.of(2020, 4, 20);
+        statistic.calculate(startDate, endDate);
+        statistic.saveResultsToFile(testXml);
+
+        Assertions.assertTrue(testXml.exists());
+
+        Path path = Paths.get("src/test/resources", "saveTest.xml");
+        String expectedXml = Files.readString(path);
+
+        String xml = Files.readString(testXml.toPath());
+
+        Assertions.assertEquals(expectedXml, xml);
     }
 }

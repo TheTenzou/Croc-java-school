@@ -8,7 +8,6 @@ import javax.imageio.IIOException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class RecordRepositoryTest {
@@ -108,7 +107,7 @@ public class RecordRepositoryTest {
 
         recordRepository.delete(records.get(0));
 
-        List<Record> expectedList = Collections.singletonList(records.get(1));
+        List<Record> expectedList = Arrays.asList(records.get(1), records.get(2));
 
         Assertions.assertEquals(-1, records.get(0).getId());
         Assertions.assertEquals(expectedList, recordRepository.findAll());

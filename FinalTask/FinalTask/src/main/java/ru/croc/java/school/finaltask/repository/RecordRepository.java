@@ -178,7 +178,7 @@ public class RecordRepository {
     }
 
     /**
-     * Метод обноляет запись в таблице books.
+     * Метод обноляет запись в таблице.
      *
      * @param record запись
      */
@@ -210,7 +210,7 @@ public class RecordRepository {
     }
 
     /**
-     * Метод удаляет запись из таюлици.
+     * Метод удаляет запись из таблици.
      *
      * @param record запись
      */

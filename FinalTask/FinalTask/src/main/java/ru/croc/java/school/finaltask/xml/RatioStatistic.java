@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 @XmlRootElement(name = "statistic")
 @XmlType(propOrder = {"startDate", "endDate", "ratio"})
-public class ResultStatistic {
+public class RatioStatistic {
 
     /**
      * Начало временного промежутка.
@@ -43,7 +43,7 @@ public class ResultStatistic {
      * @param endDate   конец временного промежутка
      * @param ratio     соотношение между выписаными поциентами и новыми выявлеными случаями
      */
-    public ResultStatistic(LocalDate startDate, LocalDate endDate, double ratio) {
+    public RatioStatistic(LocalDate startDate, LocalDate endDate, double ratio) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.ratio = ratio;
@@ -52,7 +52,7 @@ public class ResultStatistic {
     /**
      * Пустой конструктор.
      */
-    public ResultStatistic() {
+    public RatioStatistic() {
         this(LocalDate.now(), LocalDate.now(), 1);
     }
 
@@ -72,7 +72,7 @@ public class ResultStatistic {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ResultStatistic that = (ResultStatistic) o;
+        RatioStatistic that = (RatioStatistic) o;
         return Double.compare(that.ratio, ratio) == 0 &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate);

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.*;
 import ru.croc.java.school.finaltask.database.datasource.DataSourceProvider;
 import ru.croc.java.school.finaltask.database.model.Record;
 import ru.croc.java.school.finaltask.database.repository.RecordRepository;
-import ru.croc.java.school.finaltask.xml.ResultStatistic;
+import ru.croc.java.school.finaltask.xml.RatioStatistic;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,9 +64,9 @@ public class StatisticTest {
         LocalDate endDate = LocalDate.of(2020, 4, 20);
         statistic.calculate(startDate, endDate);
 
-        ResultStatistic resultStatistic = new ResultStatistic(startDate, endDate, 4);
+        RatioStatistic resultStatistic = new RatioStatistic(startDate, endDate, 4);
 
-        Assertions.assertEquals(resultStatistic, statistic.getResultStatistic());
+        Assertions.assertEquals(resultStatistic, statistic.getRatioStatistic());
 
     }
 
@@ -92,9 +92,9 @@ public class StatisticTest {
         LocalDate endDate = LocalDate.of(2020, 4, 13);
         statistic.calculate(startDate, endDate);
 
-        ResultStatistic resultStatistic = new ResultStatistic(startDate, endDate, 5);
+        RatioStatistic resultStatistic = new RatioStatistic(startDate, endDate, 5);
 
-        Assertions.assertEquals(resultStatistic, statistic.getResultStatistic());
+        Assertions.assertEquals(resultStatistic, statistic.getRatioStatistic());
 
     }
 
@@ -110,9 +110,9 @@ public class StatisticTest {
         LocalDate endDate = LocalDate.of(2020, 4, 13);
         statistic.calculate(startDate, endDate);
 
-        ResultStatistic resultStatistic = new ResultStatistic(startDate, endDate, NaN);
+        RatioStatistic resultStatistic = new RatioStatistic(startDate, endDate, NaN);
 
-        Assertions.assertEquals(resultStatistic, statistic.getResultStatistic());
+        Assertions.assertEquals(resultStatistic, statistic.getRatioStatistic());
     }
 
     /**
@@ -133,9 +133,9 @@ public class StatisticTest {
         LocalDate endDate = LocalDate.of(2020, 4, 13);
         statistic.calculate(startDate, endDate);
 
-        ResultStatistic resultStatistic = new ResultStatistic(startDate, endDate, POSITIVE_INFINITY);
+        RatioStatistic resultStatistic = new RatioStatistic(startDate, endDate, POSITIVE_INFINITY);
 
-        Assertions.assertEquals(resultStatistic, statistic.getResultStatistic());
+        Assertions.assertEquals(resultStatistic, statistic.getRatioStatistic());
     }
 
     /**

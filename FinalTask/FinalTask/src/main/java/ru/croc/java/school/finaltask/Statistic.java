@@ -2,7 +2,7 @@ package ru.croc.java.school.finaltask;
 
 import ru.croc.java.school.finaltask.database.model.Record;
 import ru.croc.java.school.finaltask.database.repository.RecordRepository;
-import ru.croc.java.school.finaltask.xml.ResultStatistic;
+import ru.croc.java.school.finaltask.xml.RatioStatistic;
 import ru.croc.java.school.finaltask.xml.converter.JaxbConverter;
 
 import java.io.BufferedWriter;
@@ -21,7 +21,7 @@ public class Statistic {
     /**
      * Результаты вычислений статистики.
      */
-    private ResultStatistic resultStatistic;
+    private RatioStatistic ratioStatistic;
 
     /**
      * Конструктор.
@@ -30,7 +30,7 @@ public class Statistic {
      */
     public Statistic(RecordRepository recordRepository) {
         this.recordRepository = recordRepository;
-        this.resultStatistic = null;
+        this.ratioStatistic = null;
     }
 
     /**
@@ -41,19 +41,16 @@ public class Statistic {
      */
     public void calculate(LocalDate startDate, LocalDate endDate) {
         List<Record> recordList = recordRepository.findAll();
-//        List<Record> filteredList = recordList.stream().
-//                filter(r -> r.getDate().isAfter(startDate) && r.getDate().isBefore(endDate)).
-//                collect(Collectors.toList());
 
         int recoverCount = recordList.stream().
                 filter(r -> r.getDate().isAfter(startDate) && r.getDate().isBefore(endDate)).
                 mapToInt(Record::getRecoverCount).sum();
 
-        int sick = recordList.stream().
+        int infected = recordList.stream().
                 filter(r -> r.getDate().isAfter(startDate) && r.getDate().isBefore(endDate)).
-                mapToInt(Record::getSickCount).sum();
+                mapToInt(Record::getInfectedCount).sum();
 
-        this.resultStatistic = new ResultStatistic(startDate, endDate, recoverCount / (double) sick);
+        this.ratioStatistic = new RatioStatistic(startDate, endDate, recoverCount / (double) infected);
     }
 
     /**
@@ -63,9 +60,9 @@ public class Statistic {
      * @throws IOException ошибки при соохранении файла
      */
     public void saveResultsToFile(File file) throws IOException {
-        if (resultStatistic != null) {
+        if (ratioStatistic != null) {
             JaxbConverter jaxbConverter = new JaxbConverter();
-            String xml = jaxbConverter.toXml(resultStatistic);
+            String xml = jaxbConverter.toXml(ratioStatistic);
 
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             bufferedWriter.write(xml);
@@ -78,7 +75,7 @@ public class Statistic {
         return recordRepository;
     }
 
-    public ResultStatistic getResultStatistic() {
-        return resultStatistic;
+    public RatioStatistic getRatioStatistic() {
+        return ratioStatistic;
     }
 }

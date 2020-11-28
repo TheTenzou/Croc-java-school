@@ -1,7 +1,6 @@
 package ru.croc.java.school.finaltask.xml;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.croc.java.school.finaltask.xml.converter.JaxbConverter;
@@ -20,7 +19,7 @@ public class ConverterTest {
     @Test
     @DisplayName("Проверка преобразование к xml")
     public void testToXml() throws IOException {
-        ResultStatistic resultStatistic = new ResultStatistic(
+        RatioStatistic resultStatistic = new RatioStatistic(
                 LocalDate.of(2020, 10, 10),
                 LocalDate.of(2020, 10, 20),
                 2.5
@@ -47,9 +46,9 @@ public class ConverterTest {
         Path path = Paths.get("src/test/resources", "test.xml");
         String xml = Files.readString(path);
 
-        ResultStatistic resultStatistic = jaxbConverter.fromXml(xml, ResultStatistic.class);
+        RatioStatistic resultStatistic = jaxbConverter.fromXml(xml, RatioStatistic.class);
 
-        ResultStatistic expedtedResult = new ResultStatistic(
+        RatioStatistic expedtedResult = new RatioStatistic(
                 LocalDate.of(2020, 10, 10),
                 LocalDate.of(2020, 10, 20),
                 2.5

@@ -24,9 +24,9 @@ public class Record {
     private LocalDate date;
 
     /**
-     * Колличество заболевших.
+     * Колличество заразившихся.
      */
-    private int sickCount;
+    private int infectedCount;
 
     /**
      * Колличество выздоровевших.
@@ -41,18 +41,18 @@ public class Record {
     /**
      * Конструктор.
      *
-     * @param id           индетификатор записи
-     * @param city         название города
-     * @param date         дата проведения замера
-     * @param sickCount    колличество заболеших
-     * @param recoverCount колличество выздоровевших
-     * @param diedCount    колличество погибших
+     * @param id            индетификатор записи
+     * @param city          название города
+     * @param date          дата проведения замера
+     * @param infectedCount колличество заболеших
+     * @param recoverCount  колличество выздоровевших
+     * @param diedCount     колличество погибших
      */
-    public Record(int id, String city, LocalDate date, int sickCount, int recoverCount, int diedCount) {
+    public Record(int id, String city, LocalDate date, int infectedCount, int recoverCount, int diedCount) {
         this.id = id;
         this.city = city;
         this.date = date;
-        this.sickCount = sickCount;
+        this.infectedCount = infectedCount;
         this.recoverCount = recoverCount;
         this.diedCount = diedCount;
     }
@@ -60,14 +60,14 @@ public class Record {
     /**
      * Конструктор.
      *
-     * @param city         название города
-     * @param date         дата проведения замера
-     * @param sickCount    колличество заболеших
-     * @param recoverCount колличество выздоровевших
-     * @param diedCount    колличество погибших
+     * @param city          название города
+     * @param date          дата проведения замера
+     * @param infectedCount колличество заболеших
+     * @param recoverCount  колличество выздоровевших
+     * @param diedCount     колличество погибших
      */
-    public Record(String city, LocalDate date, int sickCount, int recoverCount, int diedCount) {
-        this(-1, city, date, sickCount, recoverCount, diedCount);
+    public Record(String city, LocalDate date, int infectedCount, int recoverCount, int diedCount) {
+        this(-1, city, date, infectedCount, recoverCount, diedCount);
     }
 
     public int getId() {
@@ -94,12 +94,12 @@ public class Record {
         this.date = date;
     }
 
-    public int getSickCount() {
-        return sickCount;
+    public int getInfectedCount() {
+        return infectedCount;
     }
 
-    public void setSickCount(int sickCount) {
-        this.sickCount = sickCount;
+    public void setInfectedCount(int infectedCount) {
+        this.infectedCount = infectedCount;
     }
 
     public int getRecoverCount() {
@@ -124,7 +124,7 @@ public class Record {
         if (o == null || getClass() != o.getClass()) return false;
         Record record = (Record) o;
         return id == record.id &&
-                sickCount == record.sickCount &&
+                infectedCount == record.infectedCount &&
                 recoverCount == record.recoverCount &&
                 diedCount == record.diedCount &&
                 Objects.equals(city, record.city) &&
@@ -133,6 +133,6 @@ public class Record {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, city, date, sickCount, recoverCount, diedCount);
+        return Objects.hash(id, city, date, infectedCount, recoverCount, diedCount);
     }
 }

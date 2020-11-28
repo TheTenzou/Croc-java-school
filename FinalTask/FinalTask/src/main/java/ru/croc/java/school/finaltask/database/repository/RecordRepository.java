@@ -50,7 +50,7 @@ public class RecordRepository {
                                 + "id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
                                 + "city VARCHAR(255),"
                                 + "date_measure DATE,"
-                                + "sick INTEGER,"
+                                + "infected INTEGER,"
                                 + "recover INTEGER,"
                                 + "died INTEGER"
                                 + ")"
@@ -91,7 +91,7 @@ public class RecordRepository {
                         resultSet.getInt("id"),
                         resultSet.getString("city"),
                         resultSet.getDate("date_measure").toLocalDate(),
-                        resultSet.getInt("sick"),
+                        resultSet.getInt("infected"),
                         resultSet.getInt("recover"),
                         resultSet.getInt("died")
                 ));
@@ -114,7 +114,7 @@ public class RecordRepository {
                 + TABLE_NAME
                 + " (city,"
                 + " date_measure,"
-                + " sick,"
+                + " infected,"
                 + " recover,"
                 + " died)"
                 + " VALUES (?, ?, ?, ?, ?)";
@@ -123,7 +123,7 @@ public class RecordRepository {
 
             statement.setString(1, record.getCity());
             statement.setDate(2, java.sql.Date.valueOf(record.getDate()));
-            statement.setInt(3, record.getSickCount());
+            statement.setInt(3, record.getInfectedCount());
             statement.setInt(4, record.getRecoverCount());
             statement.setInt(5, record.getDiedCount());
             statement.execute();
@@ -166,7 +166,7 @@ public class RecordRepository {
                         resultSet.getInt("id"),
                         resultSet.getString("city"),
                         resultSet.getDate("date_measure").toLocalDate(),
-                        resultSet.getInt("sick"),
+                        resultSet.getInt("infected"),
                         resultSet.getInt("recover"),
                         resultSet.getInt("died")
                 );
@@ -187,7 +187,7 @@ public class RecordRepository {
                 + "SET "
                 + "city=?, "
                 + "date_measure=?, "
-                + "sick=?, "
+                + "infected=?, "
                 + "recover=?, "
                 + "died=? "
                 + "WHERE id=?";
@@ -197,7 +197,7 @@ public class RecordRepository {
 
             statement.setString(1, record.getCity());
             statement.setDate(2, java.sql.Date.valueOf(record.getDate()));
-            statement.setInt(3, record.getSickCount());
+            statement.setInt(3, record.getInfectedCount());
             statement.setInt(4, record.getRecoverCount());
             statement.setInt(5, record.getDiedCount());
             statement.setInt(6, record.getId());

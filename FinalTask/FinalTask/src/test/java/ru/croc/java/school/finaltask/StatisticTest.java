@@ -25,10 +25,10 @@ public class StatisticTest {
      */
     private RecordRepository recordRepository;
 
-    private File testXml = new File("temp.xml");
+    private final File testXml = new File("temp.xml");
 
     /**
-     *
+     * Инициализация репозитория.
      */
     @BeforeEach
     public void initRepository() throws IOException {
@@ -54,7 +54,7 @@ public class StatisticTest {
     public void testCalculate() {
 
         Record record = new Record(
-                "city 17", LocalDate.of(2020,4,12),
+                "city 17", LocalDate.of(2020, 4, 12),
                 2, 8, 4);
         recordRepository.create(record);
 
@@ -78,11 +78,11 @@ public class StatisticTest {
     public void testCalculateWithSeveralRecords() {
 
         List<Record> recordList = Arrays.asList(
-                new Record("city 17", LocalDate.of(2020,4,12),
+                new Record("city 17", LocalDate.of(2020, 4, 12),
                         2, 8, 4),
-                new Record("city 27", LocalDate.of(2020,4,12),
+                new Record("city 27", LocalDate.of(2020, 4, 12),
                         1, 7, 4),
-                new Record("city 17", LocalDate.of(2020,4,14),
+                new Record("city 17", LocalDate.of(2020, 4, 14),
                         3, 8, 4));
         recordList.forEach(record -> recordRepository.create(record));
 
@@ -123,7 +123,7 @@ public class StatisticTest {
     public void testWithNoInfected() {
 
         Record record = new Record(
-                "city 17", LocalDate.of(2020,4,12),
+                "city 17", LocalDate.of(2020, 4, 12),
                 0, 8, 4);
         recordRepository.create(record);
 
@@ -146,7 +146,7 @@ public class StatisticTest {
     public void testSaveResultsToFile() throws IOException {
 
         Record record = new Record(
-                "city 17", LocalDate.of(2020,4,12),
+                "city 17", LocalDate.of(2020, 4, 12),
                 2, 8, 4);
         recordRepository.create(record);
 

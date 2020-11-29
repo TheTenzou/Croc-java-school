@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Класс для вычисления статистики.
+ */
 public class Statistic {
     /**
      * Данные по короновирусной инфекции.

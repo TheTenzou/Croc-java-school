@@ -34,11 +34,15 @@ public class JaxbConverter {
         return mapper.readValue(xml, type);
     }
 
+    /**
+     * Метод создание XmlMapper'a.
+     *
+     * @return XmlMapper
+     */
     private XmlMapper createXmlMapper() {
         final XmlMapper mapper = new XmlMapper();
         JaxbAnnotationModule module = new JaxbAnnotationModule();
         mapper.registerModule(module);
-        mapper.setDefaultUseWrapper(false);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return mapper;
     }

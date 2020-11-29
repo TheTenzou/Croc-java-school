@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Репозиторий с записями.
+ */
 public class RecordRepository {
 
     /**
@@ -14,6 +17,9 @@ public class RecordRepository {
      */
     private static final String TABLE_NAME = "corono_virus_record";
 
+    /**
+     * DataSource.
+     */
     private EmbeddedDataSource dataSource;
 
     /**

@@ -1,6 +1,6 @@
 package ru.croc.java.school.finaltask.xml;
 
-import ru.croc.java.school.finaltask.xml.converter.DateAdapter;
+import ru.croc.java.school.finaltask.xml.converter.adapter.DateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

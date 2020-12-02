@@ -2,9 +2,9 @@ package ru.croc.java.school.finaltask;
 
 import org.junit.jupiter.api.*;
 import ru.croc.java.school.finaltask.database.datasource.DataSourceProvider;
-import ru.croc.java.school.finaltask.database.model.Record;
+import ru.croc.java.school.finaltask.model.dto.Record;
 import ru.croc.java.school.finaltask.database.repository.RecordRepository;
-import ru.croc.java.school.finaltask.xml.RatioStatistic;
+import ru.croc.java.school.finaltask.model.dto.RatioStatistic;
 
 import java.io.File;
 import java.io.IOException;

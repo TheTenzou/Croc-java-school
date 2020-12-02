@@ -3,6 +3,7 @@ package ru.croc.java.school.finaltask.xml;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.croc.java.school.finaltask.model.dto.RatioStatistic;
 import ru.croc.java.school.finaltask.xml.converter.JaxbConverter;
 
 import java.io.IOException;

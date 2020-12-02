@@ -1,4 +1,4 @@
-package ru.croc.java.school.finaltask.xml;
+package ru.croc.java.school.finaltask.model.dto;
 
 import ru.croc.java.school.finaltask.xml.converter.adapter.DateAdapter;
 

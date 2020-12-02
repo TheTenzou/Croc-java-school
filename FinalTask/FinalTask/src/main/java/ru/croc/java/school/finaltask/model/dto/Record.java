@@ -1,4 +1,4 @@
-package ru.croc.java.school.finaltask.database.model;
+package ru.croc.java.school.finaltask.model.dto;
 
 import java.time.LocalDate;
 import java.util.Objects;

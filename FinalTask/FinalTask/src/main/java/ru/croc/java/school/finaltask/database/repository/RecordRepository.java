@@ -15,7 +15,7 @@ public class RecordRepository {
     /**
      * Название таблицы.
      */
-    private static final String TABLE_NAME = "corono_virus_record";
+    private static final String TABLE_NAME = "corona_virus_record";
 
     /**
      * DataSource.
@@ -64,7 +64,7 @@ public class RecordRepository {
             }
             resultSet.close();
         } catch (SQLException e) {
-            System.out.println("faild to create talble");
+            System.out.println("failed to create table");
             e.printStackTrace();
         }
     }
@@ -77,7 +77,7 @@ public class RecordRepository {
              Statement statement = connection.createStatement()) {
             statement.executeUpdate("DROP TABLE " + TABLE_NAME);
         } catch (SQLException e) {
-            System.out.println("faild to delete table");
+            System.out.println("failed to delete table");
             e.printStackTrace();
         }
     }
@@ -104,7 +104,7 @@ public class RecordRepository {
             }
             return records;
         } catch (SQLException e) {
-            System.out.println("faild find books");
+            System.out.println("failed find books");
             e.printStackTrace();
         }
         return new ArrayList<>();
@@ -139,12 +139,12 @@ public class RecordRepository {
                     record.setId(generatedKeys.getInt(1));
                     return generatedKeys.getInt(1);
                 } else {
-                    System.out.println("Create book faild");
+                    System.out.println("Create book failed");
                     return -1;
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Create book faild");
+            System.out.println("Create book failed");
             e.printStackTrace();
         }
         return -1;

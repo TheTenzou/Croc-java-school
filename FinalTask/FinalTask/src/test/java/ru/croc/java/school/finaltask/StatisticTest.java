@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.lang.Double.NaN;
 import static java.lang.Double.POSITIVE_INFINITY;
@@ -160,9 +161,17 @@ public class StatisticTest {
         Assertions.assertTrue(testXml.exists());
 
         Path path = Paths.get("src/test/resources", "saveTest.xml");
-        String expectedXml = Files.readString(path);
+        StringBuilder expectedXmlStringBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines(path)) {
+            stream.forEach(s -> expectedXmlStringBuilder.append(s).append(System.lineSeparator()));
+        }
+        String expectedXml = expectedXmlStringBuilder.toString();
 
-        String xml = Files.readString(testXml.toPath());
+        StringBuilder xmlStringBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines(testXml.toPath())) {
+            stream.forEach(s -> xmlStringBuilder.append(s).append(System.lineSeparator()));
+        }
+        String xml = xmlStringBuilder.toString();
 
         Assertions.assertEquals(expectedXml, xml);
     }

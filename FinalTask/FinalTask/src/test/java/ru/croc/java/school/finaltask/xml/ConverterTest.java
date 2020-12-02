@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 public class ConverterTest {
 
@@ -30,7 +31,11 @@ public class ConverterTest {
         String xml = jaxbConverter.toXml(resultStatistic);
 
         Path path = Paths.get("src/test/resources", "test.xml");
-        String expectedXml = Files.readString(path);
+        StringBuilder stringBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines(path)) {
+            stream.forEach(s -> stringBuilder.append(s).append(System.lineSeparator()));
+        }
+        String expectedXml = stringBuilder.toString();
 
         Assertions.assertEquals(expectedXml, xml);
     }
@@ -44,7 +49,11 @@ public class ConverterTest {
         JaxbConverter jaxbConverter = new JaxbConverter();
 
         Path path = Paths.get("src/test/resources", "test.xml");
-        String xml = Files.readString(path);
+        StringBuilder stringBuilder = new StringBuilder();
+        try (Stream<String> stream = Files.lines(path)) {
+            stream.forEach(s -> stringBuilder.append(s).append(System.lineSeparator()));
+        }
+        String xml = stringBuilder.toString();
 
         RatioStatistic resultStatistic = jaxbConverter.fromXml(xml, RatioStatistic.class);
 

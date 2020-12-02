@@ -8,6 +8,14 @@
     <artifactId>FinalTask</artifactId>
     <version>1.0.0</version>
 
+    <properties>
+        <junit-jupiter-api.version>5.7.0</junit-jupiter-api.version>
+        <derby.version>10.13.1.1</derby.version>
+        <jackson-dataformat-xml.version>2.9.10</jackson-dataformat-xml.version>
+        <jackson-module-jaxb-annotations.version>2.9.10</jackson-module-jaxb-annotations.version>
+        <jakarta.xml.bind-api.version>2.3.3</jakarta.xml.bind-api.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -31,28 +39,28 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>${junit-jupiter-api.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.13.1.1</version>
+            <version>${derby.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.9.10</version>
+            <version>${jackson-dataformat-xml.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>2.9.10</version>
+            <version>${jackson-module-jaxb-annotations.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>2.3.3</version>
+            <version>${jakarta.xml.bind-api.version}</version>
         </dependency>
     </dependencies>
 

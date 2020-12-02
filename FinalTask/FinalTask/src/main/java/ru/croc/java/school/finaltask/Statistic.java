@@ -3,11 +3,10 @@ package ru.croc.java.school.finaltask;
 import ru.croc.java.school.finaltask.model.dto.Record;
 import ru.croc.java.school.finaltask.database.repository.RecordRepository;
 import ru.croc.java.school.finaltask.model.dto.RatioStatistic;
+import ru.croc.java.school.finaltask.utils.FileUtils;
 import ru.croc.java.school.finaltask.xml.converter.JaxbConverter;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,10 +65,7 @@ public class Statistic {
         JaxbConverter jaxbConverter = new JaxbConverter();
         String xml = jaxbConverter.toXml(ratioStatistic);
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-        bufferedWriter.write(xml);
-        bufferedWriter.flush();
-        bufferedWriter.close();
+        FileUtils.saveString(file, xml);
     }
 
     public RecordRepository getRecordRepository() {

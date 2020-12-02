@@ -62,8 +62,7 @@ public class Statistic {
      * @throws IOException ошибки при соохранении файла
      */
     public void saveResultsToFile(File file) throws IOException {
-        JaxbConverter jaxbConverter = new JaxbConverter();
-        String xml = jaxbConverter.toXml(ratioStatistic);
+        String xml = JaxbConverter.toXml(ratioStatistic);
 
         FileUtils.saveString(file, xml);
     }

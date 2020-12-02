@@ -27,9 +27,7 @@ public class ConverterTest {
                 2.5
         );
 
-        JaxbConverter jaxbConverter = new JaxbConverter();
-
-        String xml = jaxbConverter.toXml(resultStatistic);
+        String xml = JaxbConverter.toXml(resultStatistic);
 
         Path path = Paths.get("src/test/resources", "test.xml");
         StringBuilder stringBuilder = new StringBuilder();
@@ -47,7 +45,6 @@ public class ConverterTest {
     @Test
     @DisplayName("Проверка преобразование из xml")
     public void testFromXml() throws IOException {
-        JaxbConverter jaxbConverter = new JaxbConverter();
 
         Path path = Paths.get("src/test/resources", "test.xml");
         StringBuilder stringBuilder = new StringBuilder();
@@ -56,14 +53,14 @@ public class ConverterTest {
         }
         String xml = stringBuilder.toString();
 
-        RatioStatistic resultStatistic = jaxbConverter.fromXml(xml, RatioStatistic.class);
+        RatioStatistic resultStatistic = JaxbConverter.fromXml(xml, RatioStatistic.class);
 
-        RatioStatistic expedtedResult = new RatioStatistic(
+        RatioStatistic expectedResult = new RatioStatistic(
                 LocalDate.of(2020, 10, 10),
                 LocalDate.of(2020, 10, 20),
                 2.5
         );
 
-        Assertions.assertEquals(expedtedResult, resultStatistic);
+        Assertions.assertEquals(expectedResult, resultStatistic);
     }
 }

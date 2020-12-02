@@ -17,7 +17,7 @@ public class JaxbConverter {
      * @param obj объект
      * @return строкове представлени xml
      */
-    public String toXml(Object obj) throws JsonProcessingException {
+    public static String toXml(Object obj) throws JsonProcessingException {
         XmlMapper mapper = createXmlMapper();
         return mapper.writeValueAsString(obj);
     }
@@ -29,7 +29,7 @@ public class JaxbConverter {
      * @param type тип к которому необходимо преобразовать
      * @return объект
      */
-    public <T> T fromXml(String xml, Class<T> type) throws IOException {
+    public static <T> T fromXml(String xml, Class<T> type) throws IOException {
         XmlMapper mapper = createXmlMapper();
         return mapper.readValue(xml, type);
     }
@@ -39,7 +39,7 @@ public class JaxbConverter {
      *
      * @return XmlMapper
      */
-    private XmlMapper createXmlMapper() {
+    private static XmlMapper createXmlMapper() {
         final XmlMapper mapper = new XmlMapper();
         JaxbAnnotationModule module = new JaxbAnnotationModule();
         mapper.registerModule(module);

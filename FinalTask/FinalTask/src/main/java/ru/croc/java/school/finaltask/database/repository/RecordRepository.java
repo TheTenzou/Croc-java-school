@@ -13,11 +13,6 @@ import java.util.List;
 public class RecordRepository {
 
     /**
-     * Название таблицы.
-     */
-    private static final String TABLE_NAME = "corona_virus_record";
-
-    /**
      * DataSource.
      */
     private EmbeddedDataSource dataSource;
@@ -29,57 +24,14 @@ public class RecordRepository {
      */
     public RecordRepository(EmbeddedDataSource dataSource) {
         this.dataSource = dataSource;
-        initTable();
-    }
-
-    /**
-     * Инициализация БД.
-     */
-    private void initTable() {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-
-            DatabaseMetaData databaseMetaData = connection.getMetaData();
-            ResultSet resultSet = databaseMetaData.getTables(
-                    null,
-                    null,
-                    TABLE_NAME.toUpperCase(),
-                    new String[]{"TABLE"}
-            );
-            if (resultSet.next()) {
-                System.out.println("table already exist");
-            } else {
-                statement.executeUpdate(
-                        "CREATE TABLE "
-                                + TABLE_NAME
-                                + " ("
-                                + "id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY(START WITH 1, INCREMENT BY 1),"
-                                + "city VARCHAR(255),"
-                                + "date_measure DATE,"
-                                + "infected INTEGER,"
-                                + "recover INTEGER,"
-                                + "died INTEGER"
-                                + ")"
-                );
-            }
-            resultSet.close();
-        } catch (SQLException e) {
-            System.out.println("failed to create table");
-            e.printStackTrace();
-        }
+        RecordTable.init(this.dataSource);
     }
 
     /**
      * Удаление таблицы.
      */
     public void dropTable() {
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DROP TABLE " + TABLE_NAME);
-        } catch (SQLException e) {
-            System.out.println("failed to delete table");
-            e.printStackTrace();
-        }
+        RecordTable.drop(dataSource);
     }
 
     /**
@@ -90,7 +42,7 @@ public class RecordRepository {
     public List<Record> findAll() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + TABLE_NAME)) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + Record.getTableName())) {
             List<Record> records = new ArrayList<>();
             while (resultSet.next()) {
                 records.add(new Record(
@@ -117,7 +69,7 @@ public class RecordRepository {
      */
     public int create(Record record) {
         String selQuery = "INSERT INTO "
-                + TABLE_NAME
+                + Record.getTableName()
                 + " (city,"
                 + " date_measure,"
                 + " infected,"
@@ -157,7 +109,7 @@ public class RecordRepository {
      * @return запись
      */
     public Record get(int id) {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE id=?";
+        String query = "SELECT * FROM " + Record.getTableName() + " WHERE id=?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -189,7 +141,7 @@ public class RecordRepository {
      * @param record запись
      */
     public void update(Record record) {
-        String query = "UPDATE " + TABLE_NAME + " "
+        String query = "UPDATE " + Record.getTableName() + " "
                 + "SET "
                 + "city=?, "
                 + "date_measure=?, "
@@ -223,7 +175,7 @@ public class RecordRepository {
     public void delete(Record record) {
         if (record != null) {
 
-            String query = "DELETE FROM " + TABLE_NAME + " WHERE id=?";
+            String query = "DELETE FROM " + Record.getTableName() + " WHERE id=?";
 
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement statement = connection.prepareStatement(query)) {

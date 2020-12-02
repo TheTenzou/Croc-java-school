@@ -9,6 +9,11 @@ import java.util.Objects;
 public class Record {
 
     /**
+     * Название таблицы.
+     */
+    private static final String TABLE_NAME = "corona_virus_record";
+
+    /**
      * Индетификатор записи.
      */
     private int id;
@@ -68,6 +73,10 @@ public class Record {
      */
     public Record(String city, LocalDate date, int infectedCount, int recoverCount, int diedCount) {
         this(-1, city, date, infectedCount, recoverCount, diedCount);
+    }
+
+    public static String getTableName() {
+        return TABLE_NAME;
     }
 
     public int getId() {
